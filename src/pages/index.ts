@@ -1,0 +1,6 @@
+export * from './ChangePassword'
+export * from './Login'
+export * from './Register'
+export * from './Page400'
+export * from './Page500'
+export * from './ResetPassword'
