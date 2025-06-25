@@ -1,16 +1,20 @@
 import React from 'react';
-import AppBar from '@/pages/AppBar';
 import { Route, Routes } from 'react-router';
 import ResetPassword from '@/pages/ResetPassword';
-const Login = React.lazy(() => import('@/pages/Login'));
-const Register = React.lazy(() => import('@/pages/Register'));
+import Category from '@/pages/category/Category';
+import SearchResult from '@/pages/search/SearchResult';
+const Home = React.lazy(() => import('@/pages/home/Home'));
+const Login = React.lazy(() => import('@/pages/sign-in/Login'));
+const Register = React.lazy(() => import('@/pages/register/Register'));
 const ChangePassword = React.lazy(() => import('@/pages/ChangePassword'));
 const Page400 = React.lazy(() => import('@/pages/Page400'));
 const Page500 = React.lazy(() => import('@/pages/Page500'));
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<AppBar />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/category" element={<Category />} />
+      <Route path="/search" element={<SearchResult />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/change-password" element={<ChangePassword />} />

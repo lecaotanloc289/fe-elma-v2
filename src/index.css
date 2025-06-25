@@ -3,7 +3,7 @@
 
 @plugin "tailwindcss-animate";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -61,14 +61,8 @@ a:hover {
   color: #535bf2;
 }
 
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 button {
-  border-radius: 8px;
+  /* border-radius: 8px; */
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -79,11 +73,11 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  /* border-color: #646cff; */
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  /* outline: 4px auto -webkit-focus-ring-color; */
 }
 
 @media (prefers-color-scheme: light) {
@@ -171,6 +165,37 @@ button:focus-visible {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-blue: #006FBB;
+  --color-purple: #9C6ADE;
+  --color-indigo: #5C6AC4;
+  --color-teal: #47C1BF;
+  --color-green: #50B83C;
+  --color-orange: #F49342;
+  --color-red: #DE3618;
+  --color-yellow: #EEC200;
+
+  --color-dark-title: #161D25;
+  --color-dark-text: #959EAD;
+  --color-dart-subtext: #5A7184;
+  --color-dark-ink: #212B36;
+  --color-dark-light: #454F5B;
+  --color-dark-lighter: #637381;
+  --color-dark-lightest: #919EAB;
+
+  --color-white-dark-light: #C4CDD5;
+  --color-white-sky:#DFE3E8;
+  --color-white-enough-light:#F4F6F8;
+  --color-white-lighter:#F9FAFB;
+
+  /* Fill light color */
+  /* Using light color, let using color / < % opacity> */
+  /* Ex: text-light-blue/10 */
+
+  /* Dark fill light color */
+  /* The same above */
+
+
 }
 
 @layer base {
@@ -180,4 +205,74 @@ button:focus-visible {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Config ở đây  */
+/* Apply base không cần sử dụng class ở tag nữa */
+@layer base {
+ h1 {
+  font-size: 56px;
+  line-height: 72px;
+  letter-spacing: 0.2px;
+  font-weight: bold;
+  color: var(--color-dark-title)
+
+ }
+ h2 {
+  font-size: 36px;
+  line-height: 52px;
+  letter-spacing: 0.2px;
+  font-weight: bold;
+  color: var(--color-dark-title)
+
+ }
+ h3 {
+  font-size: 28px;
+  line-height: 44px;
+  letter-spacing: 0.2px;
+  font-weight: bold;
+  color: var(--color-dark-title)
+
+ }
+ h4 {
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0.2px;
+  font-weight: bold;
+  color: var(--color-dark-title)
+
+ }
+ h5 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--color-dark-text)
+
+ }
+ h6 {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight:lighter;
+  color: var(--color-dark-lighter)
+
+ }
+ p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight:lighter;
+  color: var(--color-dark-text)
+ }
+}
+@layer components {
+  .card {
+    @apply m-10 rounded-lg bg-white
+  }
+}
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+@utility flex-between {
+  @apply flex justify-between items-center
 }

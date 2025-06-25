@@ -2,3 +2,10 @@
   border: none !important;
   box-shadow: none !important;
 }
+
+div.slick-track, div.my-auto {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
