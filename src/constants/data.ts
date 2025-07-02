@@ -319,4 +319,74 @@ export const data = {
       },
     ],
   },
+
+  register_alt: {
+    headline:
+      'Join with +2 Million seller who offer best product from all across country',
+    subheadline: 'Sign up now and get all big benefit from Elma e-commerce:',
+    benefits: [
+      {
+        icon: 'images/Shipping.svg',
+        title: 'Free Shipping',
+        description: 'You will get free shipping from all your transactions.',
+        note: 'No terms, no transaction limit.',
+      },
+      {
+        icon: 'images/Money.svg',
+        title: 'Money Back Guarantee',
+        description: 'You will get free shipping from all your transactions.',
+        note: 'No terms, no transaction limit.',
+      },
+      {
+        icon: 'images/Customer Service.svg',
+        title: '24/7 Customer support',
+        description: 'You will get free shipping from all your transactions.',
+        note: 'No terms, no transaction limit.',
+      },
+    ],
+    trusted_brands: [
+      'images/register-alt-brand/Asus.png',
+      'images/register-alt-brand/Xiaomi.png',
+      'images/register-alt-brand/SamSung.png',
+      'images/register-alt-brand/Sony.png',
+      'images/register-alt-brand/Wacom.png',
+      'images/register-alt-brand/Apple.png',
+    ],
+  },
+
+  sign_in_alt: {
+    headline:
+      'Enjoy all big benefits fro Elma that you can’t find in other product again',
+    subheadline: 'Sign in now and get all big benefit from Elma e-commerce:',
+    benefits: [
+      {
+        icon: 'images/Shipping.svg',
+        title: 'Free Shipping',
+        description: 'You will get free shipping from all your transactions.',
+      },
+      {
+        icon: 'images/Money.svg',
+        title: 'Money Back Guarantee',
+        description: 'You will get free shipping from all your transactions.',
+      },
+      {
+        icon: 'images/Customer Service.svg',
+        title: '24/7 Customer support',
+        description: 'You will get free shipping from all your transactions.',
+      },
+      {
+        icon: 'images/Customer Service.svg',
+        title: 'Best Prices',
+        description: 'You will get free shipping from all your transactions.',
+      },
+    ],
+    trusted_brands: [
+      'images/register-alt-brand/Asus.png',
+      'images/register-alt-brand/Xiaomi.png',
+      'images/register-alt-brand/SamSung.png',
+      'images/register-alt-brand/Sony.png',
+      'images/register-alt-brand/Wacom.png',
+      'images/register-alt-brand/Apple.png',
+    ],
+  },
 };

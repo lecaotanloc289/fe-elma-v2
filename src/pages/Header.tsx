@@ -111,14 +111,16 @@ const Header = () => {
               </button>
             </Space.Compact>
           </div>
-          <div className="w-2/5 flex items-center justify-end">
-            <Badge count={0} showZero offset={[-15, 5]}>
-              <IconButton
-                size="fa-xl"
-                icon="fa-cart-shopping"
-                onClick={handleClickCart}
-              />
-            </Badge>
+          <div className="w-2/5 flex items-center justify-end space-x-4">
+            <div className="cursor-pointer">
+              <Badge count={0} showZero offset={[-15, 5]}>
+                <IconButton
+                  size="fa-xl"
+                  icon="fa-cart-shopping"
+                  onClick={handleClickCart}
+                />
+              </Badge>
+            </div>
 
             <IconButton
               size="fa-xl"

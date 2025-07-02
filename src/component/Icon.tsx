@@ -12,20 +12,21 @@ const SocialIcon = ({ icon, link }: { icon: string; link: string }) => (
 const IconButton = ({
   icon,
   size,
+  iconColor,
+  className,
   onClick,
 }: {
   icon: string;
   size: string;
+  iconColor?: string;
+  className?: string;
   onClick?: () => void;
 }) => (
   <div
     onClick={onClick}
-    className="mx-3 flex justify-center items-center border w-[48px] h-[48px] border-gray-300 rounded-full"
+    className={`cursor-pointer flex justify-center items-center border w-[48px] h-[48px] text-dark-lightest border-gray-300 rounded-full ${className ?? ''}`}
   >
-    <i
-      className={`fa-solid ${icon} ${size} cursor-pointer`}
-      style={{ color: '#7e7c83' }}
-    />
+    <i className={`fa-solid ${icon} ${size} ${iconColor}`} />
   </div>
 );
 
@@ -40,7 +41,7 @@ const HomeIcon = () => {
       onClick={handleBackToHome}
     >
       <img
-        src="/Shape.svg"
+        src="/Elma.svg"
         alt="Logo"
         className="w-[21px] h-[19px] cursor-pointer"
       />

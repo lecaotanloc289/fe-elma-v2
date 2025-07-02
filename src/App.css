@@ -9,3 +9,14 @@ div.slick-track, div.my-auto {
   align-items: center !important;
 }
 
+span.ant-checkbox-label {
+  color: var(--color-dark-label) !important;
+}
+
+button.ant-typography-expand {
+  color: var(--color-indigo) !important; 
+}
+
+.ant-input-group-addon {
+  border-color: var(--color-white-enough-light) !important;
+}

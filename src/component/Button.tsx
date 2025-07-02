@@ -9,7 +9,7 @@ export const Button = ({
 }: ButtonProps) => {
   const base = 'px-4 py-2 rounded-[8px] font-semibold! text-[16px]';
   const variants = {
-    contained: 'bg-indigo!  outline-none',
+    contained: '!bg-indigo  outline-none',
     outlined: 'outline-1 outline-indigo',
     text: '',
   };

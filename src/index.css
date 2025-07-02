@@ -166,6 +166,7 @@ button:focus-visible {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  --color-dark-indigo: #43467F;
   --color-blue: #006FBB;
   --color-purple: #9C6ADE;
   --color-indigo: #5C6AC4;
@@ -177,6 +178,7 @@ button:focus-visible {
 
   --color-dark-title: #161D25;
   --color-dark-text: #959EAD;
+  --color-dark-label: #5A7184;
   --color-dart-subtext: #5A7184;
   --color-dark-ink: #212B36;
   --color-dark-light: #454F5B;
@@ -266,6 +268,10 @@ button:focus-visible {
 @layer components {
   .card {
     @apply m-10 rounded-lg bg-white
+  }
+
+  .label {
+    @apply text-[14px] leading-5 text-dark-label
   }
 }
 
