@@ -20,3 +20,14 @@ button.ant-typography-expand {
 .ant-input-group-addon {
   border-color: var(--color-white-enough-light) !important;
 }
+
+.ant-tabs-nav::before {
+  display: none;
+}
+
+.ant-tabs-nav-list {
+  display: flex ;
+  justify-content: space-between ;
+  width: -webkit-fill-available;
+}
+

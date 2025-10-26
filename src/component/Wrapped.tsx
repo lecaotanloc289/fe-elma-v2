@@ -2,7 +2,7 @@ const Wrapped = ({
   children,
   className,
 }: {
-  children: any;
+  children?: any;
   className?: string;
 }) => {
   return <div className={`w-4/5 mx-auto ${className ?? ''}`}>{children}</div>;

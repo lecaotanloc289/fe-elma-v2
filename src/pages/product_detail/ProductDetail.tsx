@@ -15,6 +15,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
 import Product from '@/component/Product';
+import { data } from '@/constants';
 const CustomSegmented = styled(Segmented)`
   .ant-segmented-item-selected {
     background-color: var(--color-dark-lighter);
@@ -76,81 +77,9 @@ const ProductDetail = () => {
       children: '3.69M-Dot Tru-Finder OLED EVF',
     },
   ];
-  const product_detail = {
-    name: 'Sony Alpha Mirrorless 4K Video Camera (Body Only)',
-    rating: 4.6,
-    product_sold: 261,
-    product_watched: 3100,
-    description:
-      "Sony α, is a camera system introduced on 5 June 2006. It uses and expands upon Konica Minolta camera technologies, including the Minolta AF SLR lens mount, whose assets were acquired by Sony after the end of Konica Minolta's photography operations in early 2006.",
-    images: [
-      { id: 1, image: 'images/Detail1.png' },
-      { id: 2, image: 'images/Detail2.png' },
-      { id: 3, image: 'images/Detail3.png' },
-    ],
-    type: [
-      { id: 1, value: 'Body Only' },
-      { id: 2, value: 'Full Camera' },
-    ],
-    color: [
-      'Original',
-      'Black',
-      'Gray',
-      // { id: 1, color: 'Original' },
-      // { id: 2, color: 'Black' },
-      // { id: 3, color: 'Gray' },
-    ],
-    price: 1999.99,
-    overview: descriptions,
-    whatsInsideBox: {
-      items: [
-        'Sony Alpha (Body Only)',
-        'BC-QZ1 Battery Charger',
-        'Lithium-Ion Battery (2280mAh)',
-        'Cable Protector',
-        'Shoulder Strap',
-        'Accessory Shoe Cap',
-        'ALC-B1EM Body Cap for E-Mount',
-        'Eyepiece Cap',
-        'USB Type-C Cable',
-      ],
-    },
-    code: [
-      { id: 1, label: 'SKU Number', content: 'AIM-36403-00426' },
-      { id: 2, label: 'Product Code', content: 'MTA-6593742' },
-      { id: 3, label: 'EAN Code', content: '[AIWBPU0301OL]' },
-    ],
-    rate: [
-      { id: 1, rate: 5.0, quantity: 1500, percentage: 75 },
-      { id: 2, rate: 4.0, quantity: 1500, percentage: 65 },
-      { id: 3, rate: 3.0, quantity: 1500, percentage: 45 },
-      { id: 4, rate: 2.0, quantity: 1500, percentage: 20 },
-      { id: 5, rate: 1.0, quantity: 1500, percentage: 8 },
-    ],
-  };
+  const product_detail = data.product_detail.product_detail;
 
-  const commentFilters = [
-    { label: '5 stars', value: 5 },
-    { label: '4 stars & up', value: 4 },
-    { label: '3 stars & up', value: 3 },
-    { label: '2 stars & up', value: 2 },
-    { label: '1 star only', value: 1 },
-    { label: 'With photos', value: 'photo' },
-    { label: 'With videos', value: 'video' },
-    { label: 'Without media', value: 'none' },
-    { label: 'Most helpful', value: 'helpful' },
-    { label: 'Most recent', value: 'recent' },
-    { label: 'Highest rating', value: 'high_rating' },
-    { label: 'Lowest rating', value: 'low_rating' },
-    { label: 'Last 7 days', value: '7d' },
-    { label: 'Last 30 days', value: '30d' },
-    { label: 'Last 6 months', value: '6m' },
-    { label: 'Custom range', value: 'custom' },
-    { label: 'All regions', value: 'all' },
-    { label: 'Vietnam', value: 'vn' },
-    { label: 'US', value: 'us' },
-    { label: 'Others', value: 'other' },
-  ];
+  const commentFilters = data.product_detail.commentFilters;
 
   const [selectedImage, setSelectedImage] = useState(
     product_detail.images[1].image

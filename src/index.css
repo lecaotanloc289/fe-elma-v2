@@ -174,6 +174,7 @@ button:focus-visible {
   --color-green: #50B83C;
   --color-orange: #F49342;
   --color-red: #DE3618;
+  --color-dark-red: #D0011B;
   --color-yellow: #EEC200;
 
   --color-dark-title: #161D25;
@@ -273,7 +274,16 @@ button:focus-visible {
   .label {
     @apply text-[14px] leading-5 text-dark-label
   }
+
+  .text-cell {
+    @apply block font-sans text-sm antialiased font-normal leading-normal ;
+  }
+
+  .zigzag-box {
+    @apply relative bg-white;
+  }
 }
+/* Component have not suggest, utility have */
 
 @utility flex-center {
   @apply flex justify-center items-center;
@@ -282,3 +292,6 @@ button:focus-visible {
 @utility flex-between {
   @apply flex justify-between items-center
 }
+
+/* Tái sử dụng với @apply */
+

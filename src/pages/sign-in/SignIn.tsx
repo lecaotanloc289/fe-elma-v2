@@ -4,12 +4,46 @@ import MainLayout from '@/views/MainLayout';
 import { Card, Divider, Form, Input } from 'antd';
 import GradientImage from '../register/GradientImage';
 import { useNavigate } from 'react-router';
+import { FormEvent, useEffect, useState } from 'react';
+import { useAuthStore } from '@/store';
+import { useMessageApi } from '@/services/hooks/messageContext';
 
 const SignIn = () => {
+  const authStatus = useAuthStore(state => state.status);
+  const message = useMessageApi();
   const navigate = useNavigate();
-  const handleNavigateLogin = () => {
-    navigate('/register');
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const handleNavigateSignUp = () => {
+    navigate('/sign-in');
   };
+
+  const loginUser = useAuthStore(state => state.loginUser);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const { email, password } = credentials;
+    if ([email, password].includes('')) console.log('first');
+    // return message.error('Todos los campos son obligatarios');
+    try {
+      await loginUser(email, password);
+    } catch (error) {
+      console.log('No se pudo autenticar');
+    }
+  };
+
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+    setCredentials(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    if (authStatus === 'authorized') {
+      message.success('Login successful. Welcome to Elma!');
+      navigate('/home');
+    }
+  }, [authStatus]);
 
   return (
     <MainLayout>
@@ -20,17 +54,17 @@ const SignIn = () => {
             <div className="flex-between">
               <h3 className="text-dark-title">Sign in to Elma</h3>
               <span
-                onClick={handleNavigateLogin}
+                onClick={handleNavigateSignUp}
                 className="text-indigo cursor-pointer flex-center"
               >
-                Register here
+                Sign Up here
                 <i className="text-[10px] mx-1 fa-solid fa-chevron-right"></i>
               </span>
             </div>
             <div className="flex space-x-4 my-10">
               <button className="flex-center space-x-2 !bg-dark-lighter rounded-sm  w-full text-white !py-3">
                 <i className="fa-brands fa-google fa-xl"></i>
-                <h5 className="!text-white ">Register with Google</h5>
+                <h5 className="!text-white ">Sign in with Google</h5>
               </button>
               <IconButton
                 icon="fa-brands fa-x-twitter fa-xl"
@@ -46,7 +80,7 @@ const SignIn = () => {
               />
             </div>
             <Divider />
-            <Form layout="vertical" className="">
+            <Form layout="vertical" className="" onFinish={handleSubmit}>
               <Form.Item
                 label="Username or Email"
                 rules={[
@@ -64,6 +98,10 @@ const SignIn = () => {
                   className="!border-white-enough-light"
                   size="large"
                   placeholder="name@gmail.com"
+                  name="email"
+                  type="email"
+                  value={credentials.email}
+                  onChange={handleChange}
                 />
               </Form.Item>
               <Form.Item
@@ -78,8 +116,12 @@ const SignIn = () => {
               >
                 <Input
                   className="!border-white-enough-light"
+                  type="password"
                   size="large"
                   placeholder=""
+                  name="password"
+                  value={credentials.password}
+                  onChange={handleChange}
                 />
               </Form.Item>
 

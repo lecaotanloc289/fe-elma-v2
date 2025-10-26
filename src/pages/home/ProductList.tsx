@@ -1,6 +1,5 @@
 import Wrapped from '@/component/Wrapped';
 import { data } from '@/constants';
-import { Rate } from 'antd';
 
 const ProductList = () => {
   return (

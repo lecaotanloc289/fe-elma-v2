@@ -1,8 +1,8 @@
 import { Button } from '@/component';
 import Wrapped from '@/component/Wrapped';
+import { data } from '@/constants';
 import MainLayout from '@/views/MainLayout';
 import { Breadcrumb, Checkbox, Divider, GetProp, Select } from 'antd';
-import { randomInt, randomUUID } from 'crypto';
 import React, { useCallback } from 'react';
 
 const SearchResult = () => {
@@ -21,65 +21,12 @@ const SearchResult = () => {
       ),
     },
   ];
-  const filterSidebarData = {
-    popularFilters: [
-      {
-        label: '⭐ 4 star or upper',
-        value: '4_star_or_upper',
-      },
-      {
-        label: 'Same day delivery',
-        value: 'same_day_delivery',
-      },
-      {
-        label: 'Super seller',
-        value: 'super_seller',
-      },
-      {
-        label: 'Sale Product',
-        value: 'sale_product',
-      },
-    ],
-    categories: [
-      {
-        icon: 'images/category/Headphones.png',
-        name: 'Category 01',
-        value: 'category_01',
-      },
-      {
-        icon: 'images/category/Computer.png',
-        name: 'Item Category 02',
-        value: 'item_category_02',
-      },
-      {
-        icon: 'images/category/Phone.png',
-        name: 'Category list 03',
-        value: 'category_list_03',
-      },
-      {
-        icon: 'images/category/Healthy.png',
-        name: 'Category 04',
-        value: 'category_04',
-      },
-      {
-        icon: 'images/category/Camera.png',
-        name: 'Item Category 05',
-        value: 'item_category_05',
-      },
-      {
-        icon: 'images/category/Mens fashion.png',
-        name: 'Category list 06',
-        value: 'category_list_06',
-      },
-    ],
-    seeAllLink: {
-      text: 'See all categories',
-      url: '#', // cập nhật URL thực tế nếu có
-    },
-  };
-  const onChange: GetProp<typeof Checkbox.Group, 'onChange'> = (
-    checkedValues,
-  ) => {
+  const searchData = data.search;
+
+  const onChange: GetProp<
+    typeof Checkbox.Group,
+    'onChange'
+  > = checkedValues => {
     console.log('checked = ', checkedValues);
   };
 
@@ -88,155 +35,6 @@ const SearchResult = () => {
     setSelectedColor(color);
     console.log(color);
   }, []);
-
-  const colors = [
-    { id: 1, color: 'blue' },
-    { id: 2, color: 'green' },
-    { id: 3, color: 'purple' },
-    { id: 4, color: 'teal' },
-    { id: 5, color: 'indigo' },
-    { id: 6, color: 'yellow' },
-    { id: 7, color: 'orange' },
-    { id: 8, color: 'red' },
-  ];
-
-  const filterOption = [
-    { id: 1, lable: 'highest_rating', value: 'Highest rating' },
-  ];
-
-  const store = {
-    id: 1,
-    image: 'images/Apple.png',
-    feature: 'Featured store',
-    name: 'Apple Store Official',
-    product_sold: '10,5k',
-    store_rating: 4.6,
-  };
-
-  const products = [
-    {
-      id: 1,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 1.png',
-      backgroundColor: 'bg-green',
-    },
-    {
-      id: 2,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 1.png',
-      backgroundColor: 'bg-blue',
-    },
-  ];
-
-  const search_results = [
-    {
-      id: 1,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: 'images/Macbook Pro 2018 1.png',
-      favorite: true,
-    },
-    {
-      id: 2,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: 'images/Macbook Pro 2018 2.png',
-      favorite: false,
-    },
-    {
-      id: 3,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: 'images/Macbook Pro 2018 3.png',
-      favorite: true,
-    },
-    {
-      id: 4,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 2.png',
-      favorite: false,
-    },
-    {
-      id: 5,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 3.png',
-      favorite: true,
-    },
-    {
-      id: 6,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 1.png',
-      favorite: false,
-    },
-    {
-      id: 7,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 3.png',
-      favorite: true,
-    },
-    {
-      id: 8,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 1.png',
-      favorite: false,
-    },
-    {
-      id: 9,
-      name: 'Macbook Pro 2018',
-      price: 1725.0,
-      sale: true,
-      currency: 'USD',
-      store: 'Apple Store Official',
-      rating: 4.6,
-      image: '/images/Macbook Pro 2018 2.png',
-      favorite: true,
-    },
-  ];
 
   return (
     <MainLayout>
@@ -279,7 +77,7 @@ const SearchResult = () => {
                 <p className="font-[500] text-dark-title">Popular Filter</p>
                 <Checkbox.Group
                   className="!space-y-4"
-                  options={filterSidebarData.popularFilters}
+                  options={searchData.filterSidebarData.popularFilters}
                   onChange={onChange}
                 />
               </div>
@@ -288,7 +86,7 @@ const SearchResult = () => {
             <div className="px-4">
               <p className="font-[500] text-dark-title">Category</p>
               <div className="space-y-4 mt-4">
-                {filterSidebarData?.categories?.map((category) => (
+                {searchData?.filterSidebarData?.categories?.map(category => (
                   <div
                     key={`${category.name}-${category.icon}`}
                     className="space-x-4 flex cursor-pointer"
@@ -355,7 +153,7 @@ const SearchResult = () => {
               <p className="font-[500] text-dark-title ">Product Color</p>
               <div className="p-6">
                 <div className="grid grid-cols-4 gap-4">
-                  {colors.map((color) => (
+                  {searchData?.colors.map(color => (
                     <div
                       key={`${color.id}-${color.color}`}
                       onClick={() => handleOnChangeColor(color?.color)}
@@ -385,7 +183,7 @@ const SearchResult = () => {
                   className="w-[200px] !h-[52px] font-bold bg-white-lighter !text-dark-title"
                   placeholder="Filled"
                   variant="filled"
-                  options={filterOption}
+                  options={searchData?.filterOption}
                   defaultValue={'Highest rating'}
                 />
               </div>
@@ -393,21 +191,24 @@ const SearchResult = () => {
             <div className="grid grid-cols-3 pt-4">
               <div className="flex-center flex-col py-4 m-4">
                 <img
-                  src={store.image ?? ''}
-                  alt={store?.name ?? ''}
+                  src={searchData?.store.image ?? ''}
+                  alt={searchData?.store?.name ?? ''}
                   className=""
                   width={64}
                   height={64}
                 />
                 <p className="text-green font-[400]">
-                  <i className="fa-solid fa-award"></i> {store?.feature ?? ''}
+                  <i className="fa-solid fa-award"></i>{' '}
+                  {searchData?.store?.feature ?? ''}
                 </p>
                 <span className="text-[18px] font-bold leading-5 tracking-[0.2px] text-dark-title my-4">
-                  {store?.name ?? ''}
+                  {searchData?.store?.name ?? ''}
                 </span>
                 <div className="rounded-md bg-white-lighter flex justify-around p-4 space-x-6 w-full">
                   <div className="flex-center flex-col gap-y-2">
-                    <p className="font-bold">{store?.product_sold}</p>
+                    <p className="font-bold">
+                      {searchData?.store?.product_sold}
+                    </p>
                     <span className="text-[12px] leading-4.5 text-dark-light">
                       Product sold
                     </span>
@@ -415,7 +216,7 @@ const SearchResult = () => {
                   <div className="flex-center flex-col gap-y-2">
                     <p className="font-bold">
                       <i className="fa-solid fa-star text-yellow mr-1"></i>
-                      {store?.store_rating}
+                      {searchData?.store?.store_rating}
                     </p>
                     <span className="text-[12px] leading-4.5 text-dark-light">
                       Store rating
@@ -430,7 +231,7 @@ const SearchResult = () => {
                   <span>View Store</span>
                 </Button>
               </div>
-              {products?.map((product) => (
+              {searchData?.products?.map(product => (
                 <div
                   key={`${product.id}-${product.name}`}
                   className={`m-4 rounded-md  ${product?.backgroundColor ?? ''}/10`}
@@ -470,7 +271,7 @@ const SearchResult = () => {
             </div>
             <Divider />
             <div className="grid grid-cols-3 w-full">
-              {search_results?.map((result) => (
+              {searchData?.search_results?.map(result => (
                 <div
                   key={`${result.id}-${result.image}}`}
                   className={`m-4 rounded-md bg-white-lighter`}
