@@ -1,10 +1,10 @@
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import { Checkbox, Form, Input, Select } from 'antd';
 import { Option } from 'antd/es/mentions';
 import MainLayout from '@/views/MainLayout';
-import { CustomInput } from '@/component/Input';
-import { Button } from '@/component';
+import { CustomInput } from '@/components/Input';
+import { Button } from '@/components';
 
 const RegisterAlt = () => {
   const registerAltLeft = data.register_alt;

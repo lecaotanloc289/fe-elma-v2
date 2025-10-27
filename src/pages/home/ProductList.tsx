@@ -1,15 +1,15 @@
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 
 const ProductList = () => {
   return (
     <Wrapped className="flex-between my-12.5">
-      {data.home.productLists.map((list) => (
+      {data.home.productLists.map(list => (
         <div className="flex flex-col w-[350px] gap-y-5 ">
           <div className="">
             <h4 className="">{list.title}</h4>
           </div>
-          {list.products.map((product) => (
+          {list.products.map(product => (
             <div className="cursor-pointer flex items-center justify-start gap-5 m-5">
               <img src={product?.image ?? ''} alt="" className="h-16" />
               <div className="">

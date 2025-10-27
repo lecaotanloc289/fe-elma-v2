@@ -1,7 +1,7 @@
 {
   "home": "Home",
   "shop": "Shop",
-  "cart": "Cart",
+  "cart": "Shopping Cart",
   "checkout": "Checkout",
   "order": "Order",
   "profile": "Profile",
@@ -23,6 +23,7 @@
   "thank_you": "Thank you for your purchase!",
   "userName": "Username",
   "password": "Password",
+  "help": "Help",
   
   "forgotPassword": "Forgot password",
   "pleaseEnterUsername": "Please enter username",

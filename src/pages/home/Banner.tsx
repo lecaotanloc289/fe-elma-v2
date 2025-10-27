@@ -1,4 +1,4 @@
-import { Button } from '@/component';
+import { Button } from '@/components';
 import { data } from '@/constants';
 import { Carousel } from 'antd';
 
@@ -9,16 +9,14 @@ const Banner = () => {
     <Carousel
       className=" bg-white-lighter py-4 "
       autoplay={{ dotDuration: true }}
-      autoplaySpeed={2000}
+      autoplaySpeed={4500}
     >
       {products.map(item => (
         <div className="my-auto " key={item.id}>
-          <div className="w-4/5 mx-auto flex items-center justify-between">
-            <section className="max-w-[499px] ">
+          <div className="w-4/5 mx-auto flex items-center justify-between  ">
+            <section className="max-w-[50%] ">
               <h4 className="text-teal text-[14px] font-bold">{item.brand}</h4>
-              <h1 className="font-bold text-[56px] leading-[72px]! tracking-[0.2px]!  text-dark-title">
-                {item.product_name}{' '}
-              </h1>
+              <h1 className="h1">{item.product_name} </h1>
               <h5 className="leading-[28px] text-dark-text">
                 {item.description}
               </h5>
@@ -26,13 +24,17 @@ const Banner = () => {
                 <Button className="text-white">
                   Buy Now for ${item.price}
                 </Button>
-                <Button variant="outlined" className="text-indigo">
+                <Button variant="outlined" className="text-dark-indigo">
                   Learn more
                 </Button>
               </div>
             </section>
-            <section>
-              <img src={`${item.image}`} alt="" className="mr-16 mt-8" />
+            <section className="flex-center">
+              <img
+                src={`${item.image}`}
+                alt={item.product_name}
+                className="mr-16 mt-8"
+              />
             </section>
           </div>
         </div>

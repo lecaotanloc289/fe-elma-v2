@@ -1,7 +1,118 @@
 @import "tailwindcss";
-@import "../src/assets/fontawesome6.4.2/css/all.css";
-
+@import "./assets/fontawesome6.4.2/css/all.css";
 @plugin "tailwindcss-animate";
+
+/* Light (300) */
+@font-face {
+  font-family: "RubikLight";
+  src: url("/fonts/rubik/static/Rubik-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikLightItalic";
+  src: url("/fonts/rubik/static/Rubik-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: "RubikRegular";
+  src: url("/fonts/rubik/static/Rubik-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikItalic";
+  src: url("/fonts/rubik/static/Rubik-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: "RubikMedium";
+  src: url("/fonts/rubik/static/Rubik-Medium.ttf") ;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikMediumItalic";
+  src: url("/fonts/rubik/static/Rubik-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: "RubikSemiBold";
+  src: url("/fonts/rubik/static/Rubik-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikSemiBoldItalic";
+  src: url("/fonts/rubik/static/Rubik-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: "RubikBold";
+  src: url("/fonts/rubik/static/Rubik-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikBoldItalic";
+  src: url("/fonts/rubik/static/Rubik-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraBold (800) */
+@font-face {
+  font-family: "RubikExtraBold";
+  src: url("/fonts/rubik/static/Rubik-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikExtraBoldItalic";
+  src: url("/fonts/rubik/static/Rubik-ExtraBoldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Black (900) */
+@font-face {
+  font-family: "RubikBlack";
+  src: url("/fonts/rubik/static/Rubik-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RubikBlackItalic";
+  src: url("/fonts/rubik/static/Rubik-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
 :root {
@@ -50,6 +161,94 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+}
+
+@theme {
+  --font-rubik-light: "RubikLight";
+  --font-rubik-light-italic: "RubikLightItalic";
+  --font-rubik-regular: "RubikRegular";
+  --font-rubik-italic: "RubikItalic";
+  --font-rubik-medium: "RubikMedium";
+  --font-rubik-medium-italic: "RubikMediumItalic";
+  --font-rubik-semibold: "RubikSemiBold";
+  --font-rubik-semibold-italic: "RubikSemiBoldItalic";
+  --font-rubik-bold: "RubikBold";
+  --font-rubik-bold-italic: "RubikBoldItalic";
+  --font-rubik-extrabold: "RubikExtraBold";
+  --font-rubik-extrabold-italic: "RubikExtraBoldItalic";
+  --font-rubik-black: "RubikBlack";
+  --font-rubik-black-italic: "RubikBlackItalic";
+  /* Color */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-dark-indigo: #43467F;
+  --color-blue: #006FBB;
+  --color-purple: #9C6ADE;
+  --color-indigo: #5C6AC4;
+  --color-teal: #47C1BF;
+  --color-green: #50B83C;
+  --color-orange: #F49342;
+  --color-red: #DE3618;
+  --color-dark-red: #D0011B;
+  --color-yellow: #EEC200;
+
+  --color-dark-title: #161D25;
+  --color-dark-text: #959EAD;
+  --color-dark-label: #5A7184;
+  --color-dart-subtext: #5A7184;
+  --color-dark-ink: #212B36;
+  --color-dark-light: #454F5B;
+  --color-dark-lighter: #637381;
+  --color-dark-lightest: #919EAB;
+
+  --color-white-dark-light: #C4CDD5;
+  --color-white-sky:#DFE3E8;
+  --color-white-enough-light:#F4F6F8;
+  --color-white-lighter:#F9FAFB;
+
+  /* Fill light color */
+  /* Using light color, let using color / < % opacity> */
+  /* Ex: text-light-blue/10 */
+
+  /* Dark fill light color */
+  /* The same above */
+
+
 }
 
 a {
@@ -128,78 +327,7 @@ button:focus-visible {
   --sidebar-ring: oklch(0.439 0 0);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 
-  --color-dark-indigo: #43467F;
-  --color-blue: #006FBB;
-  --color-purple: #9C6ADE;
-  --color-indigo: #5C6AC4;
-  --color-teal: #47C1BF;
-  --color-green: #50B83C;
-  --color-orange: #F49342;
-  --color-red: #DE3618;
-  --color-dark-red: #D0011B;
-  --color-yellow: #EEC200;
-
-  --color-dark-title: #161D25;
-  --color-dark-text: #959EAD;
-  --color-dark-label: #5A7184;
-  --color-dart-subtext: #5A7184;
-  --color-dark-ink: #212B36;
-  --color-dark-light: #454F5B;
-  --color-dark-lighter: #637381;
-  --color-dark-lightest: #919EAB;
-
-  --color-white-dark-light: #C4CDD5;
-  --color-white-sky:#DFE3E8;
-  --color-white-enough-light:#F4F6F8;
-  --color-white-lighter:#F9FAFB;
-
-  /* Fill light color */
-  /* Using light color, let using color / < % opacity> */
-  /* Ex: text-light-blue/10 */
-
-  /* Dark fill light color */
-  /* The same above */
-
-
-}
 
 @layer base {
   * {
@@ -292,6 +420,30 @@ button:focus-visible {
 @utility flex-between {
   @apply flex justify-between items-center
 }
+
+@utility h1 {
+  @apply font-rubik-medium text-[56px] leading-[72px] tracking-[0.2px] text-dark-title
+}
+
+.ant-form-item-required::before {
+  display: none !important;
+}
+
+.ant-input-status-error {
+  border-color: var(--color-white-enough-light) !important;
+}
+
+.ant-input:-webkit-autofill,
+.ant-input:autofill,
+.ant-input-affix-wrapper input:-webkit-autofill,
+.ant-input-affix-wrapper input:autofill {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: #111 !important;
+  -webkit-background-origin: var(--color-white-enough-light);
+}
+
+
 
 /* Tái sử dụng với @apply */
 

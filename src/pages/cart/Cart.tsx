@@ -1,6 +1,6 @@
-import { Button } from '@/component';
-import Heading from '@/component/Heading';
-import Wrapped from '@/component/Wrapped';
+import { Button } from '@/components';
+import Heading from '@/components/Heading';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import MainLayout from '@/views/MainLayout';
 import { Card, Checkbox, Divider } from 'antd';
@@ -8,8 +8,11 @@ import { useEffect, useState } from 'react';
 import { BackToShopping } from './components';
 import { useAuthStore } from '@/store';
 import { useMessageApi } from '@/services/hooks';
+import { useTranslation } from 'react-i18next';
 
 const Cart = () => {
+  const { t } = useTranslation();
+
   // const message = useMessageApi();
   // const status = useAuthStore(state => state.status);
   const [checked, setChecked] = useState(false);
@@ -33,6 +36,7 @@ const Cart = () => {
         <div className="">
           <div className="flex-between">
             <Heading content={data.cart.heading} className="" />
+            {/* <h2 className="">{t('cart')}</h2> */}
             <BackToShopping />
           </div>
 

@@ -1,5 +1,5 @@
-import { Button, IconButton } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import { Button, IconButton } from '@/components';
+import Wrapped from '@/components/Wrapped';
 import MainLayout from '@/views/MainLayout';
 import {
   Descriptions,
@@ -14,7 +14,7 @@ import Paragraph from 'antd/es/typography/Paragraph';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
-import Product from '@/component/Product';
+import Product from '@/components/Product';
 import { data } from '@/constants';
 const CustomSegmented = styled(Segmented)`
   .ant-segmented-item-selected {

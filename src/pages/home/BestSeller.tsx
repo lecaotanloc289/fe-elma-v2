@@ -1,5 +1,5 @@
-import Heading from '@/component/Heading';
-import Product from '@/component/Product';
+import Heading from '@/components/Heading';
+import Product from '@/components/Product';
 import { data } from '@/constants';
 
 const BestSeller = () => {

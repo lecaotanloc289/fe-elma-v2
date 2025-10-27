@@ -12,7 +12,8 @@ const resources = {
 };
 const language = localStorage.getItem(LANGUAGE);
 i18next.use(initReactI18next).init({
-    lng: language || 'en', // if you're using a language detector, do not define the lng option
-    debug: true,
-    resources
-})
+  // if you're using a language detector, do not define the lng option
+  lng: language || 'en',
+  debug: true,
+  resources,
+});

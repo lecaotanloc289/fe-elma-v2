@@ -5,16 +5,19 @@ import Category from '@/pages/category/Category';
 import SearchResult from '@/pages/search/SearchResult';
 import OrderSuccess from '@/pages/order/OrderSuccess';
 import ProductDetail from '@/pages/product_detail/ProductDetail';
-import RegisterAlt from '@/pages/register/RegisterAlt';
+import SignUpAlt from '@/pages/sign-up/SignUpAlt';
 import SignIn from '@/pages/sign-in/SignIn';
 import OrderTracking from '@/pages/order/OrderTracking';
 import Cart from '@/pages/cart/Cart';
 import Checkout from '@/pages/cart/Checkout';
 import OrderTrackingDetail from '@/pages/order/OrderTrackingDetail';
-import ProtectedRoute from '@/component/ProtectedRoute';
+import PrivateRoute from '@/components/PrivateRoute';
+import Favorite from '@/pages/favorite/Favorite';
+import UserProfile from '@/pages/user/UserProfile';
+import PublicRoute from '@/components/PublicRoute';
 const Home = React.lazy(() => import('@/pages/home/Home'));
 const SignInAlt = React.lazy(() => import('@/pages/sign-in/SignInAlt'));
-const Register = React.lazy(() => import('@/pages/register/Register'));
+const SignUp = React.lazy(() => import('@/pages/sign-up/SignUp'));
 const ChangePassword = React.lazy(() => import('@/pages/ChangePassword'));
 const Page400 = React.lazy(() => import('@/pages/Page400'));
 const Page500 = React.lazy(() => import('@/pages/Page500'));
@@ -26,25 +29,28 @@ const AppRoutes = () => {
       <Route path="/category" element={<Category />} />
       <Route path="/search" element={<SearchResult />} />
       <Route path="/product-detail" element={<ProductDetail />} />
-      <Route path="/sign-in-alt" element={<SignInAlt />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/register-alt" element={<RegisterAlt />} />
+      <Route element={<PublicRoute />}>
+        <Route path="/sign-in-alt" element={<SignInAlt />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-up-alt" element={<SignUpAlt />} />
+      </Route>
       <Route path="/reset-password" element={<ResetPassword />} />
 
       {/* Private routes */}
-      <Route element={<ProtectedRoute />}>
+      <Route element={<PrivateRoute />}>
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/order-tracking" element={<OrderTracking />} />
         <Route
           path="/order-tracking-detail"
           element={<OrderTrackingDetail />}
         />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-
-        <Route path="/order-success" element={<OrderSuccess />} />
-
-        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/user-profile" element={<UserProfile />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

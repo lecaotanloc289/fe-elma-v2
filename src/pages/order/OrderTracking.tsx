@@ -1,4 +1,4 @@
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
 import MainLayout from '@/views/MainLayout';
 import { Tabs, type TabsProps } from 'antd';
 import OrderItem from './components/OrderItem';

@@ -1,5 +1,5 @@
-import { Button } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import { Button } from '@/components';
+import Wrapped from '@/components/Wrapped';
 import MainLayout from '@/views/MainLayout';
 
 const OrderSuccess = () => {

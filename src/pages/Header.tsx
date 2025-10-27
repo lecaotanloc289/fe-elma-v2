@@ -1,4 +1,4 @@
-import { HomeIcon, IconButton, SocialIcon } from '@/component';
+import { Button, HomeIcon, IconButton, SocialIcon } from '@/components';
 import { languages } from '@/locales';
 import { useLanguage } from '@/services/hooks';
 import { Badge, Divider, Input, Select, Space } from 'antd';
@@ -9,7 +9,8 @@ import { data } from '../constants';
 import { useAuthStore } from '@/store';
 const Header = () => {
   const navigate = useNavigate();
-  const logoutUser = useAuthStore(state => state.logoutUser);
+  const logOut = useAuthStore(state => state.logOut);
+  const userData = useAuthStore(state => state.user);
 
   // Change language
   const { lang, handleChangeLanguage } = useLanguage();
@@ -34,17 +35,12 @@ const Header = () => {
   ];
   const handleAccountOptions = (v: any) => {
     setAccountOption(v);
-    console.log(v);
     if (v === 3) {
-      logoutUser();
+      logOut();
       navigate('/sign-in');
     }
   };
 
-  const handleBackToHome = () => {
-    navigate('/');
-  };
-  // Check login
   const handleClickCart = () => {
     navigate('/cart');
   };
@@ -52,11 +48,10 @@ const Header = () => {
     navigate('/favorite');
   };
   const handleClickUser = () => {
-    navigate('/user');
+    navigate('/user-profile');
   };
   const handleOrderTracking = () => {
     navigate('/order-tracking');
-    // navigate('/login');
   };
 
   return (
@@ -77,7 +72,7 @@ const Header = () => {
               {t('Order tracking')}
             </h6>
             <h6 className="cursor-pointer  font-normal text-base ">
-              {t('Help')}
+              {t('help')}
             </h6>
             <Select
               className="border-none flex items-center text-base"
@@ -143,19 +138,32 @@ const Header = () => {
             </div>
 
             <IconButton
+              className=""
               size="fa-xl"
               icon="fa-heart"
               onClick={handleClickFavorite}
             />
-            <IconButton size="fa-xl" icon="fa-user" onClick={handleClickUser} />
+            <IconButton
+              className=""
+              size="fa-xl"
+              icon="fa-user"
+              onClick={handleClickUser}
+            />
 
             <div className="min-h-[48px]">
               <h5 className="ml-3 mt-2 leading-[20px] tracking-[0.18px]">
-                Join Elma
+                {userData?.fullname || (
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => navigate('/sign-in')}
+                  >
+                    Sign In
+                  </span>
+                )}
               </h5>
+
               <Select
-                style={{ fontWeight: 'bold' }}
-                className="border-none text-lg text-black font-bold w-[140px]"
+                className="border-none text-lg text-black font-extrabold w-[140px]"
                 onChange={handleAccountOptions}
                 options={accountOptions}
                 value={accountOption}

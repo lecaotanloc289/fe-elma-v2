@@ -17,7 +17,7 @@ const IconButton = ({
   onClick,
 }: {
   icon: string;
-  size: string;
+  size?: string;
   iconColor?: string;
   className?: string;
   onClick?: () => void;

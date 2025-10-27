@@ -1,4 +1,4 @@
-import { Button } from '@/component';
+import { Button } from '@/components';
 import { useNavigate } from 'react-router';
 
 const BackToShopping = () => {

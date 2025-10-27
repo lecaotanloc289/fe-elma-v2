@@ -1,5 +1,5 @@
-import { Button } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import { Button } from '@/components';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import { useMessageApi } from '@/services/hooks';
 import MainLayout from '@/views/MainLayout';

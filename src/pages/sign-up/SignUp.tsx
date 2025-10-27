@@ -1,36 +1,83 @@
-import { Button, IconButton } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import { Button, IconButton } from '@/components';
+import Wrapped from '@/components/Wrapped';
 import MainLayout from '@/views/MainLayout';
-import { Card, Checkbox, Divider, Form, Input, Select } from 'antd';
+import { Card, Checkbox, Divider, Form, Input, Select, Spin } from 'antd';
 import { Option } from 'antd/es/mentions';
 import GradientImage from './GradientImage';
-import { CustomInput } from '@/component/Input';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import {
+  emailRules,
+  fullnameRules,
+  passwordRules,
+  phoneRules,
+} from './sign-up.rules';
+import { useAuthStore } from '@/store';
+import { useMessageApi } from '@/services/hooks';
+import { SignUpForm } from '@/interfaces';
+
+type FieldType = {
+  fullname?: string;
+  email?: string;
+  phone?: string;
+  password?: string;
+  confirm_password?: string;
+};
+
+const prefixSelector = (
+  <Form.Item name="prefix" noStyle>
+    <Select style={{ width: 70 }}>
+      <Option value="1">+1</Option>
+      <Option value="84">+84</Option>
+      <Option value="87">+87</Option>
+    </Select>
+  </Form.Item>
+);
 
 const Register = () => {
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+1</Option>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
   const navigate = useNavigate();
+  const message = useMessageApi();
   const handleNavigateLogin = () => {
     navigate('/sign-in');
+  };
+  const signUp = useAuthStore(state => state.signUp);
+
+  const [loading, setLoading] = useState(false);
+
+  const [form] = Form.useForm();
+
+  const hasErrors = () =>
+    form.getFieldsError().some(({ errors }) => errors.length > 0);
+
+  const onFinish = async (data: SignUpForm) => {
+    // agreement, confirm_password, email, fullname, password, phone, prefix
+    setLoading(true);
+    const { email } = data;
+    try {
+      const result: any = await signUp(data);
+      if (result?.success) {
+        message.success(
+          `Create account success for ${email}. Let login to Elma!`
+        );
+        navigate('/sign-in');
+      } else {
+        message.warning(result?.message);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <MainLayout>
+      {loading && <Spin fullscreen />}
       <div className="my-[-300px] h-[340px] w-full bg-white-lighter mt-4"></div>
       <Wrapped>
         <div className="flex-center !space-x-10 py-10">
           <Card variant="borderless" className="w-[540px] p-4">
             <div className="flex-between">
-              <h3 className="text-dark-title">Register to Elma</h3>
+              <h3 className="text-dark-title">Sign to Elma</h3>
               <span
                 onClick={handleNavigateLogin}
                 className="text-indigo cursor-pointer flex-center"
@@ -41,7 +88,11 @@ const Register = () => {
             </div>
             <div className="flex space-x-4 my-10">
               <button className="flex-center space-x-2 !bg-dark-lighter rounded-sm  w-full text-white !py-3">
-                <i className="fa-brands fa-google fa-xl"></i>
+                <img
+                  src="/images/icons/google.svg"
+                  alt="Google Icon"
+                  width={23}
+                />
                 <h5 className="!text-white ">Register with Google</h5>
               </button>
               <IconButton
@@ -58,80 +109,65 @@ const Register = () => {
               />
             </div>
             <Divider />
-            <Form layout="vertical" className="">
+            <Form
+              name="SignUp"
+              form={form}
+              layout="vertical"
+              className=""
+              initialValues={{ prefix: '84', agreement: true }}
+              onFinish={onFinish}
+              autoComplete="off"
+              validateTrigger={['onBlur', 'onSubmit', 'onChange']}
+            >
               <div className="grid grid-cols-2 gap-x-4">
-                <Form.Item label="Your name">
-                  <Input
-                    className="!border-white-enough-light"
-                    size="large"
-                    placeholder="Your name"
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Email"
-                  rules={[
-                    {
-                      type: 'email',
-                      message: 'The input is not valid E-mail!',
-                    },
-                    {
-                      required: true,
-                      message: 'Please input your E-mail!',
-                    },
-                  ]}
+                <Form.Item<FieldType>
+                  label="Your name"
+                  name={'fullname'}
+                  rules={fullnameRules}
+                  hasFeedback
                 >
-                  <Input
-                    className="!border-white-enough-light"
-                    size="large"
-                    placeholder="name@gmail.com"
-                  />
+                  <Input size="large" placeholder="Enter your name" />
+                </Form.Item>
+                <Form.Item<FieldType>
+                  label="Email"
+                  name={'email'}
+                  rules={[...emailRules]}
+                  hasFeedback
+                >
+                  <Input size="large" placeholder="name@gmail.com" />
                 </Form.Item>
               </div>
-              <Form.Item
+              <Form.Item<FieldType>
                 name="phone"
                 label="Phone Number"
-                rules={[
-                  {
-                    message: 'Please input your phone number!',
-                  },
-                ]}
+                rules={phoneRules}
+                hasFeedback
               >
-                <CustomInput
-                  className="!border-white-enough-light"
+                <Input
                   size="large"
                   addonBefore={prefixSelector}
-                  style={{ width: '100%', borderColor: '#F4F6F8' }}
-                  placeholder="0000 000 000"
+                  style={{ width: '100%' }}
                 />
               </Form.Item>
               <div className="grid grid-cols-2 gap-x-4">
-                <Form.Item
+                <Form.Item<FieldType>
                   label="Password"
                   name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your password!',
-                    },
-                  ]}
+                  rules={passwordRules}
                   hasFeedback
                 >
-                  <Input
-                    className="!border-white-enough-light"
+                  <Input.Password
                     size="large"
-                    placeholder=""
+                    placeholder="Enter your password"
                   />
                 </Form.Item>
                 <Form.Item
-                  name="confirm"
-                  label="Repeat password"
+                  name="confirm_password"
+                  label="Confirm password"
                   dependencies={['password']}
                   hasFeedback
                   rules={[
-                    {
-                      required: true,
-                      message: 'Please confirm your password!',
-                    },
+                    ...passwordRules,
                     ({ getFieldValue }) => ({
                       validator(_, value) {
                         if (!value || getFieldValue('password') === value) {
@@ -146,10 +182,9 @@ const Register = () => {
                     }),
                   ]}
                 >
-                  <Input
-                    className="!border-white-enough-light"
+                  <Input.Password
                     size="large"
-                    placeholder=""
+                    placeholder="Confirm your password"
                   />
                 </Form.Item>
               </div>
@@ -164,7 +199,6 @@ const Register = () => {
                         : Promise.reject(new Error('Should accept agreement')),
                   },
                 ]}
-                // {...tailFormItemLayout}
               >
                 <Checkbox>
                   Agree about{' '}
@@ -175,7 +209,11 @@ const Register = () => {
                 </Checkbox>
               </Form.Item>
               <Form.Item>
-                <Button className="!bg-indigo w-full text-white" type="submit">
+                <Button
+                  disabled={hasErrors()}
+                  className="!bg-indigo w-full text-white"
+                  type="submit"
+                >
                   Create Elma Account
                 </Button>
               </Form.Item>

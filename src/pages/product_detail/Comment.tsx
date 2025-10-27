@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@/component';
+import { Button, IconButton } from '@/components';
 import { data } from '@/constants';
 import { Avatar, Divider, Image, Rate } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';

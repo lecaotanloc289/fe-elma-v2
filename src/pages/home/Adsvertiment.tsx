@@ -1,4 +1,4 @@
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import { Divider } from 'antd';
 

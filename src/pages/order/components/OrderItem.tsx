@@ -1,4 +1,4 @@
-import { ElmaShopTag } from '@/component/Tag';
+import { ElmaShopTag } from '@/components/Tag';
 import { Button, Card, Divider } from 'antd';
 import { Order } from '../types/OrderItem';
 import { useNavigate } from 'react-router';

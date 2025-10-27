@@ -1,62 +1,54 @@
+import { AuthState, SignInForm, SignUpForm } from '@/interfaces';
 import { authService } from '@/services/auth/authService';
+import { getUserFromToken } from '@/utils/jwt-decode';
 import { StateCreator, create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-export interface LoginResponse {
-  _id: string;
-  email: string;
-  name: string;
-  token: string;
-}
-
-export interface RegisterUser {
-  name: string;
-  description?: string;
-  email: string;
-  password: string;
-}
-export interface User {
-  _id: string;
-  email: string;
-  name: string;
-}
-export type AuthStatus = 'authorized' | 'unauthorized' | 'pending';
-
-export interface AuthState {
-  status: AuthStatus;
-  access_token?: string;
-  user?: User;
-
-  loginUser: (email: string, password: string) => Promise<void>;
-  logoutUser: () => void;
-  //   registerUser: (data: RegisterUser) => Promise<void>;
-}
 
 const storeApi: StateCreator<AuthState> = set => ({
   status: 'unauthorized',
   access_token: undefined,
+  refresh_token: undefined,
   user: undefined,
-  loginUser: async (email: string, password: string) => {
+  signIn: async (data: SignInForm) => {
     try {
-      const { access_token, ...user } = await authService.login(
-        email,
-        password
-      );
-      set({ status: 'authorized', access_token, user });
+      const result = await authService.signIn(data);
+      if (result?.success) {
+        const { access_token, refresh_token } = result?.data;
+        const { sub, email, fullname, iat, exp }: any =
+          getUserFromToken(access_token);
+        set({
+          status: 'authorized',
+          access_token,
+          // refresh_token,
+          user: { id: sub, email, fullname, iat, exp },
+        });
+        return result;
+      } else {
+        set({
+          status: 'unauthorized',
+          access_token: undefined,
+          user: undefined,
+        });
+        return result;
+      }
     } catch (error) {
       set({ status: 'unauthorized', access_token: undefined, user: undefined });
-      console.error('Credenciales incorrect');
+      console.error('Invalid credentials ');
     }
   },
-  logoutUser: () => {
+
+  signUp: async (data: SignUpForm) => {
+    try {
+      const result = await authService.signUp(data);
+      return result;
+    } catch (error) {
+      console.error('Credencial incorrect');
+    }
+  },
+
+  logOut: () => {
     set({ status: 'unauthorized', access_token: undefined, user: undefined });
   },
-  //   registerUser: async (data: RegisterUser) => {
-  //     try {
-  //       await AuthService.registerUser(data);
-  //     } catch (error) {
-  //       throw new Error(`${error}`);
-  //     }
-  //   },
 });
 
 export const useAuthStore = create<AuthState>()(

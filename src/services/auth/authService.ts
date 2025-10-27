@@ -1,39 +1,31 @@
 import api from '@/api/axiosConfig';
+import { SignInForm, SignUpForm } from '@/interfaces';
 const baseUrl = 'auth';
 export const authService = {
-  login: async (email: string, password: string) => {
+  signIn: async (data: SignInForm) => {
     try {
-      const response = await api.post(`${baseUrl}/sign-in`, {
-        email,
-        password,
-      });
-      console.log(response);
+      const response = await api.post(`${baseUrl}/sign-in`, data);
       if (response.data?.success) {
         return response.data;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      return error?.response?.data;
     }
   },
 
-  signup: async ({ email, password, fullname, phone }: any) => {
+  signUp: async (data: SignUpForm) => {
     try {
-      const response = await api.post(`${baseUrl}/sign-in`, {
-        email,
-        password,
-        fullname,
-        phone,
-      });
-      console.log(response);
+      const response: any = await api.post(`${baseUrl}/sign-up`, data);
+
       if (response.data?.success) {
         return response.data;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      return error?.response?.data;
     }
   },
 
-  logout: async () => {
+  logOut: async () => {
     return { success: true };
   },
 

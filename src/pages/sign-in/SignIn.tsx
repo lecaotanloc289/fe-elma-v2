@@ -1,52 +1,56 @@
-import { Button, IconButton } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import { Button, IconButton } from '@/components';
+import Wrapped from '@/components/Wrapped';
 import MainLayout from '@/views/MainLayout';
-import { Card, Divider, Form, Input } from 'antd';
-import GradientImage from '../register/GradientImage';
+import { Card, Divider, Form, Input, Spin } from 'antd';
+import GradientImage from '../sign-up/GradientImage';
 import { useNavigate } from 'react-router';
-import { FormEvent, useEffect, useState } from 'react';
 import { useAuthStore } from '@/store';
 import { useMessageApi } from '@/services/hooks/messageContext';
+import { emailRules, passwordRules } from './sign-in.rules';
+import { useState } from 'react';
+import { SignInForm } from '@/interfaces';
+type FieldType = {
+  email?: string;
+  password?: string;
+};
 
 const SignIn = () => {
-  const authStatus = useAuthStore(state => state.status);
+  const [loading, setLoading] = useState(false);
+  const signIn = useAuthStore(state => state.signIn);
+
   const message = useMessageApi();
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+
   const handleNavigateSignUp = () => {
-    navigate('/sign-in');
+    navigate('/sign-up');
   };
 
-  const loginUser = useAuthStore(state => state.loginUser);
+  const [form] = Form.useForm();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    const { email, password } = credentials;
-    if ([email, password].includes('')) console.log('first');
-    // return message.error('Todos los campos son obligatarios');
+  const hasErrors = () =>
+    form.getFieldsError().some(({ errors }) => errors.length > 0);
+
+  const onFinish = async (data: SignInForm) => {
+    setLoading(true);
     try {
-      await loginUser(email, password);
+      const result: any = await signIn(data);
+      if (result?.success) {
+        message.success('Login successful. Welcome to Elma!');
+        // navigate('/home');
+      }
+      if (result?.success === false) {
+        message.warning(result?.message || 'Invalid email or password.');
+      }
     } catch (error) {
-      console.log('No se pudo autenticar');
+      message.error('Some thing went wrong, please try again later!');
+    } finally {
+      setLoading(false);
     }
   };
-
-  const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setCredentials(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  useEffect(() => {
-    if (authStatus === 'authorized') {
-      message.success('Login successful. Welcome to Elma!');
-      navigate('/home');
-    }
-  }, [authStatus]);
 
   return (
     <MainLayout>
+      {loading && <Spin fullscreen />}
       <div className="my-[-300px] h-[340px] w-full bg-white-lighter mt-4"></div>
       <Wrapped>
         <div className="flex-center !space-x-10 py-10">
@@ -63,7 +67,11 @@ const SignIn = () => {
             </div>
             <div className="flex space-x-4 my-10">
               <button className="flex-center space-x-2 !bg-dark-lighter rounded-sm  w-full text-white !py-3">
-                <i className="fa-brands fa-google fa-xl"></i>
+                <img
+                  src="/images/icons/google.svg"
+                  alt="Google Icon"
+                  width={23}
+                />
                 <h5 className="!text-white ">Sign in with Google</h5>
               </button>
               <IconButton
@@ -80,57 +88,50 @@ const SignIn = () => {
               />
             </div>
             <Divider />
-            <Form layout="vertical" className="" onFinish={handleSubmit}>
-              <Form.Item
-                label="Username or Email"
-                rules={[
-                  {
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
-                  },
-                  {
-                    required: true,
-                    message: 'Please input your E-mail!',
-                  },
-                ]}
-              >
-                <Input
-                  className="!border-white-enough-light"
-                  size="large"
-                  placeholder="name@gmail.com"
-                  name="email"
-                  type="email"
-                  value={credentials.email}
-                  onChange={handleChange}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    message: 'Please input your password!',
-                  },
-                ]}
+            <Form
+              form={form}
+              layout="vertical"
+              className=""
+              onFinish={onFinish}
+              validateTrigger={['onBlur', 'onSubmit', 'onChange']}
+            >
+              <Form.Item<FieldType>
+                label="Email"
+                name={'email'}
+                rules={[...emailRules]}
                 hasFeedback
               >
                 <Input
-                  className="!border-white-enough-light"
-                  type="password"
                   size="large"
-                  placeholder=""
-                  name="password"
-                  value={credentials.password}
-                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  type="email"
+                  // autoComplete="off"
                 />
               </Form.Item>
+              <Form.Item<FieldType>
+                label="Password"
+                name={'password'}
+                rules={passwordRules}
+                hasFeedback
+              >
+                <Input.Password
+                  type="password"
+                  size="large"
+                  // autoComplete="off"
+                  placeholder="Enter your password"
+                />
+              </Form.Item>
+              <div className="mb-3 flex justify-end">
+                <a href="">Forgot password?</a>
+              </div>
 
-              <Form.Item>
+              <Form.Item label={null}>
                 <Button
                   className="!bg-dark-indigo w-full text-white"
                   type="submit"
+                  disabled={hasErrors()}
                 >
-                  Sign In
+                  {loading ? 'Signing In ...' : 'Sign In'}
                 </Button>
               </Form.Item>
             </Form>

@@ -1,5 +1,5 @@
-import Heading from '@/component/Heading';
-import Wrapped from '@/component/Wrapped';
+import Heading from '@/components/Heading';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import MainLayout from '@/views/MainLayout';
 import { Breadcrumb, Divider } from 'antd';
@@ -33,7 +33,7 @@ const Category = () => {
             <Breadcrumb items={breadcrumb} />
           </div>
           <div className="grid grid-cols-3 justify-center gap-10 mb-10 mx-auto">
-            {data.category.productLists.map((list) => (
+            {data.category.productLists.map(list => (
               <div className="w-full flex-center">
                 <div
                   className="rounded-md border w-[350px]"
@@ -68,7 +68,7 @@ const Category = () => {
           <div className="">
             <Heading className="items-center" content={data.category.brand} />
             <div className="grid grid-cols-4 gap-10 py-12">
-              {data.category.brandLists.map((brand) => (
+              {data.category.brandLists.map(brand => (
                 <div
                   className={`rounded-md cursor-pointer flex-center`}
                   key={brand?.id}

@@ -1,4 +1,4 @@
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
 import MainLayout from '@/views/MainLayout';
 import { BackToShopping } from './components';
 import {
@@ -16,10 +16,10 @@ import {
   Tag,
   Tooltip,
 } from 'antd';
-import { Button, DiscountIcon } from '@/component';
+import { Button, DiscountIcon } from '@/components';
 import { data } from '@/constants';
 import { useState } from 'react';
-import { ElmaShopTag } from '@/component/Tag';
+import { ElmaShopTag } from '@/components/Tag';
 
 const Checkout = () => {
   // Delivery address

@@ -1,4 +1,4 @@
-import { HomeIcon, SocialIcon } from '@/component';
+import { HomeIcon, SocialIcon } from '@/components';
 import { data } from '@/constants';
 
 const Footer = () => {
