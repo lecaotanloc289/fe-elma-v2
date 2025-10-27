@@ -1,19 +1,25 @@
-import { Button } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import { Button } from '@/components';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import { Divider } from 'antd';
+import { useNavigate } from 'react-router';
 
 const Category = () => {
+  const navigate = useNavigate();
   return (
     <Wrapped className="my-12.5">
       <div className="flex-between my-7">
         <h3 className="">Category</h3>
-        <Button className="border-indigo text-indigo" variant="outlined">
+        <Button
+          onClick={() => navigate('/category')}
+          className="border-indigo text-indigo"
+          variant="outlined"
+        >
           View all
         </Button>
       </div>
       <div className="flex-between">
-        {data?.home?.categories?.map((category) => (
+        {data?.home?.categories?.map(category => (
           <div className="flex-center flex-col gap-y-4">
             <img
               width={56}

@@ -1,8 +1,8 @@
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import { Card, Checkbox, Form, Input } from 'antd';
 import MainLayout from '@/views/MainLayout';
-import { Button } from '@/component';
+import { Button } from '@/components';
 
 const SignInAlt = () => {
   const signInAlt = data.sign_in_alt;

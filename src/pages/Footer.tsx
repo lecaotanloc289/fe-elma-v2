@@ -1,62 +1,8 @@
-import { HomeIcon, SocialIcon } from '@/component';
+import { HomeIcon, SocialIcon } from '@/components';
+import { data } from '@/constants';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const socialIcons = [
-    { id: 1, name: 'fa-square-facebook', link: '' },
-    { id: 2, name: 'fa-twitter', link: '' },
-    { id: 3, name: 'fa-linkedin', link: '' },
-    { id: 4, name: 'fa-instagram', link: '' },
-    { id: 4, name: 'fa-github', link: '' },
-  ];
-  const footerNavigation = [
-    {
-      heading: 'First Menu',
-      links: [
-        'Features',
-        'Enterprise',
-        'Security',
-        'Customer Stories',
-        'Pricing',
-        'Demo',
-      ],
-    },
-    {
-      heading: 'Second Menu',
-      links: [
-        'Engineering',
-        'Financial Services',
-        'Sales',
-        'IT',
-        'Customer Support',
-        'Human Resources',
-        'Media',
-      ],
-    },
-    {
-      heading: 'Third Menu',
-      links: [
-        'Tips',
-        'Blog',
-        'Event',
-        'Certified Program',
-        'Help Center',
-        'API',
-        'Download Template',
-      ],
-    },
-    {
-      heading: 'Fourth Menu',
-      links: [
-        'About Us',
-        'Leadership',
-        'News',
-        'Media Kit',
-        'Career',
-        'Documentation',
-      ],
-    },
-  ];
 
   return (
     <div>
@@ -66,7 +12,7 @@ const Footer = () => {
             <HomeIcon />
           </div>
           <div className="grid grid-cols-4 gap-12">
-            {footerNavigation.map((item, key) => (
+            {data.footer.footerNavigation.map((item, key) => (
               <div key={key} className="">
                 <h5 className="cursor-pointer text-dark-title leading-[20px] tracking-[0.18px]">
                   {item.heading}
@@ -88,7 +34,7 @@ const Footer = () => {
         <div className="w-4/5 mx-auto flex items-center justify-between">
           <span>Elma © Copyright {currentYear} Inc. All rights reserved</span>
           <div className="flex justify-evenly gap-2 mr-4">
-            {socialIcons.map((icon) => (
+            {data.footer.socialIcons.map(icon => (
               <SocialIcon key={icon.id} icon={icon.name} link={icon.link} />
             ))}
           </div>

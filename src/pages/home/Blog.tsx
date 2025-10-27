@@ -1,6 +1,6 @@
-import { Button } from '@/component';
-import Heading from '@/component/Heading';
-import Wrapped from '@/component/Wrapped';
+import { Button } from '@/components';
+import Heading from '@/components/Heading';
+import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 
 const Blog = () => {
@@ -13,7 +13,7 @@ const Blog = () => {
         </Button>
       </section>
       <section className="grid grid-cols-3 gap-x-10 my-9">
-        {data.home.blog.blogPosts.map((blog) => (
+        {data.home.blog.blogPosts.map(blog => (
           <div key={blog.id} className="w-[350px]">
             <img src={blog?.image ?? ''} alt="" className="rounded-md" />
             <p className=" my-4.5 text-indigo font-normal">

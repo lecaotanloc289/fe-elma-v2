@@ -1,22 +1,9 @@
-import { Button } from '@/component';
-import Wrapped from '@/component/Wrapped';
+import Wrapped from '@/components/Wrapped';
+import { data } from '@/constants';
 import { Divider } from 'antd';
 
 const Adsvertiment = () => {
-  const productInfo = {
-    id: 'lenovo-yoga-x-777',
-    name: 'Lenovo Yoga X',
-    saleTag: 'FLASH SALE 7.7.7',
-    description:
-      'Smarter and intuitive with the same expert design and detail. Plus combine innovative latest AI features',
-    price: {
-      original: 1500.0,
-      sale: 750.0,
-      currency: 'USD',
-    },
-    callToAction: 'Buy Now for $750',
-    image: '/images/lenovo-yoga-x.png',
-  };
+  const productInfo = data.home.adsvertiment.productInfo;
 
   return (
     <Wrapped>
