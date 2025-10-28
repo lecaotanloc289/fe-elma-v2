@@ -1,7 +1,9 @@
 import { Rate } from 'antd';
 import { Button } from './Button';
+import { Product } from '@/interfaces';
+import { formatPrice } from '@/utils';
 const onFavorite = () => {};
-const products = [
+const products2 = [
   {
     id: 1,
     name: 'Samsung Galaxy Watch 3',
@@ -77,12 +79,18 @@ const products = [
   },
 ];
 
-const Product = () => {
+const Products = ({ products }: { products: Product[] }) => {
+  const handleAddToCart = async (id: string) => {
+    console.log(id);
+  };
   return (
     <div className="w-4/5 mx-auto">
       <div className="grid grid-cols-4 my-4">
-        {products.map((product) => (
-          <div className="relative group max-w-[255px] p-5 my-5">
+        {products.map(product => (
+          <div
+            key={product?._id}
+            className="relative group max-w-[255px] p-5 my-5"
+          >
             <div className="flex items-center justify-between">
               {product?.sale ? (
                 <span className="w-[49px] h-[24px] bg-red/10 font-bold text-red text-[12px] leading-[18px] rounded-sm px-2 py-1">
@@ -97,31 +105,37 @@ const Product = () => {
             </div>
             <div className="flex-center my-[26px] mx-auto">
               <img
-                src={product?.image ?? ''}
+                src={product?.images[0] ?? ''}
                 alt={product?.name ?? ''}
                 className="h-[180px]"
               />
             </div>
             <div className="">
               <span className="text-[12px] leading-[18px] text-dark-text my-4">
-                Men Fashion
+                {product.brand}
               </span>
               <h5 className="font-[600] text-dark-title py-2">
-                Macbook Pro 2018 1
+                {product.name}
               </h5>
               <div className="flex-between">
-                <p className="text-indigo font-[600]">$1,725.00</p>
+                <p className="text-indigo font-[600]">
+                  {formatPrice(product.price)}
+                </p>
                 <Rate
                   className="!text-yellow"
                   style={{ fontSize: '16px' }}
                   allowHalf
                   disabled
-                  defaultValue={5}
+                  defaultValue={product.rating}
                 />
               </div>
             </div>
             <div className="absolute w-full hidden group-hover:flex group-hover:flex-col z-10">
-              <Button className="my-4 text-white" variant="contained">
+              <Button
+                onClick={() => handleAddToCart(product._id)}
+                className="my-4 text-white"
+                variant="contained"
+              >
                 <i className="fa-solid fa-cart-circle-plus mr-1 w-5 h-5"></i>
                 <span className="font-[600]">Add to cart</span>
               </Button>
@@ -137,4 +151,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Products;

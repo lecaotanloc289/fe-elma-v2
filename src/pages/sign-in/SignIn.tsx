@@ -4,7 +4,7 @@ import MainLayout from '@/views/MainLayout';
 import { Card, Divider, Form, Input, Spin } from 'antd';
 import GradientImage from '../sign-up/GradientImage';
 import { useNavigate } from 'react-router';
-import { useAuthStore } from '@/store';
+import { useAuthStore } from '@/store/auth.store';
 import { useMessageApi } from '@/services/hooks/messageContext';
 import { emailRules, passwordRules } from './sign-in.rules';
 import { useState } from 'react';

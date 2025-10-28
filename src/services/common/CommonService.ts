@@ -1,10 +1,11 @@
 import api from '@/api/axiosConfig';
-import { SignInForm, SignUpForm } from '@/interfaces';
-const baseUrl = 'auth';
-export const AuthService = {
-  signIn: async (data: SignInForm) => {
+import { Filter } from '@/interfaces';
+const baseProductUrl = 'products';
+const baseCategoriesUrl = 'categories';
+export const CommonService = {
+  getProducts: async (data: Filter) => {
     try {
-      const response = await api.post(`${baseUrl}/sign-in`, data);
+      const response = await api.post(`${baseProductUrl}/all`, data);
       return response.data;
     } catch (error: any) {
       return (
@@ -13,9 +14,9 @@ export const AuthService = {
     }
   },
 
-  signUp: async (data: SignUpForm) => {
+  getCategories: async (data: Filter) => {
     try {
-      const response = await api.post(`${baseUrl}/sign-up`, data);
+      const response = await api.get(`${baseCategoriesUrl}`, data);
       return response.data;
     } catch (error: any) {
       return (
@@ -24,9 +25,9 @@ export const AuthService = {
     }
   },
 
-  logOut: async () => {
-    return { success: true };
-  },
+  //   logOut: async () => {
+  //     return { success: true };
+  //   },
 
   //   getProfile: async () => {
   //     console.log('Fetching user profile (token is auto-attached)');

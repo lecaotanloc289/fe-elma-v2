@@ -10,10 +10,7 @@ const RegisterAlt = () => {
   const registerAltLeft = data.register_alt;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select
-        // className="!border-white-enough-light"
-        style={{ width: 70 }}
-      >
+      <Select style={{ width: 70 }}>
         <Option value="86">+1</Option>
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>

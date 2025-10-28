@@ -1,8 +1,8 @@
-import { useAuthStore } from '@/store';
+import { useAuthStore } from '@/store/auth.store';
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:8080/api/v2/';
-
+export const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v2/';
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {

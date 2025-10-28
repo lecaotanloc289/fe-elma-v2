@@ -1,16 +1,20 @@
-import { Button, HomeIcon, IconButton, SocialIcon } from '@/components';
+import { HomeIcon, IconButton, SocialIcon } from '@/components';
 import { languages } from '@/locales';
 import { useLanguage } from '@/services/hooks';
 import { Badge, Divider, Input, Select, Space } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { data } from '../constants';
-import { useAuthStore } from '@/store';
+import { useAuthStore } from '@/store/auth.store';
+import { useCommonStore } from '@/store';
+import { useCartStore } from '@/store/cart.store';
 const Header = () => {
   const navigate = useNavigate();
   const logOut = useAuthStore(state => state.logOut);
   const userData = useAuthStore(state => state.user);
+  const categories = useCommonStore(state => state.categories);
+  const cart = useCartStore(state => state.cart);
 
   // Change language
   const { lang, handleChangeLanguage } = useLanguage();
@@ -100,10 +104,17 @@ const Header = () => {
               <div className="w-full max-w-sm min-w-[200px]">
                 <div className="relative border-l border-white-enough-light flex">
                   <select className="w-full h-[48px] bg-white-lighter placeholder:text-slate-400 text-slate-700 text-sm border-none rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400  appearance-none cursor-pointer">
-                    <option value="brazil">All categories</option>
+                    <option value="all">All categories</option>
+                    {categories.length > 0 &&
+                      categories.map(category => (
+                        <option key={category._id} value={category.name}>
+                          {category.name}
+                        </option>
+                      ))}
+                    {/* <option value="brazil">All categories</option>
                     <option value="bucharest">Category 1</option>
                     <option value="london">Category 2</option>
-                    <option value="washington">Category 3</option>
+                    <option value="washington">Category 3</option> */}
                   </select>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -128,7 +139,7 @@ const Header = () => {
           </div>
           <div className="w-2/5 flex items-center justify-end space-x-4">
             <div className="cursor-pointer">
-              <Badge count={0} offset={[-5, 5]}>
+              <Badge count={cart.products?.length ?? 0} offset={[-5, 5]}>
                 <IconButton
                   size="fa-xl"
                   icon="fa-cart-shopping"

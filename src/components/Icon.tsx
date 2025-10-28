@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 const SocialIcon = ({ icon, link }: { icon: string; link: string }) => (
-  <a href={link}>
+  <a href={link} target="_blank" rel="noopener noreferrer">
     <i
       className={`fa-brands ${icon} fa-lg`}
       style={{ color: '#919EAB', cursor: 'pointer' }}
@@ -22,12 +22,13 @@ const IconButton = ({
   className?: string;
   onClick?: () => void;
 }) => (
-  <div
+  <button
+    type="button"
     onClick={onClick}
-    className={`cursor-pointer flex justify-center items-center border w-[48px] h-[48px] text-dark-lightest border-gray-300 rounded-full ${className ?? ''}`}
+    className={`!bg-white cursor-pointer flex justify-center items-center border w-[48px] h-[48px] text-dark-lightest !border-gray-300 rounded-full ${className ?? ''}`}
   >
     <i className={`fa-solid ${icon} ${size} ${iconColor}`} />
-  </div>
+  </button>
 );
 
 const HomeIcon = () => {
