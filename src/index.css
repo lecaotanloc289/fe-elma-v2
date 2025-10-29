@@ -420,14 +420,42 @@ button:focus-visible {
 @utility flex-between {
   @apply flex justify-between items-center
 }
+/* Typography */
 
 @utility h1 {
   @apply font-rubik-medium text-[56px] leading-[72px] tracking-[0.2px] text-dark-title
 }
 
+/* Button */
+
+@utility icon-button {
+  @apply !bg-white flex-center w-10 rounded-md rounded-r-none py-2 px-4 text-center text-sm transition-all hover:shadow-xs text-slate-600  hover:bg-slate-800  focus:bg-slate-800  active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none
+}
+
+/* Input */
+
+@utility input-quantity {
+  @apply w-15 !bg-white rounded-none border-l border-r border-white-enough-light py-2 px-4 text-center text-sm transition-all hover:shadow-xs text-slate-600 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none focus:outline-none focus:border-transparent
+}
+
 .ant-form-item-required::before {
   display: none !important;
 }
+
+.ant-select-selector {
+  background: none !important
+}
+
+/* Ẩn scrollbar trên dropdown của Antd Select */
+.ant-select-dropdown .rc-virtual-list-holder {
+  scrollbar-width: none; /* Firefox */
+}
+
+.ant-select-dropdown .rc-virtual-list-holder::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+  
+}
+
 
 .ant-input-status-error {
   border-color: var(--color-white-enough-light) !important;
@@ -442,6 +470,15 @@ button:focus-visible {
   -webkit-text-fill-color: #111 !important;
   -webkit-background-origin: var(--color-white-enough-light);
 }
+
+.element {
+  overflow: -moz-scrollbars-none; /* Ẩn thanh cuộn */
+}
+
+.element::-webkit-scrollbar {
+  display: none; /* Ẩn thanh cuộn */
+}
+
 
 
 

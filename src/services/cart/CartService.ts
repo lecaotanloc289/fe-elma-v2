@@ -32,9 +32,24 @@ export const CartService = {
     }
   },
 
-  deleteProductFromCart: async (data: any) => {
+  updateProductCartItem: async (data: AddProductItem) => {
     try {
-      const response = await api.delete(`${baseUrl}`, data);
+      const response = await api.patch(baseUrl, data);
+      return response.data;
+    } catch (error: any) {
+      return (
+        error?.response?.data ?? {
+          success: false,
+          data: [],
+          message: 'Network error',
+        }
+      );
+    }
+  },
+
+  deleteProductFromCart: async (data: [string]) => {
+    try {
+      const response = await api.delete(`${baseUrl}`, { data });
       return response.data;
     } catch (error: any) {
       return (

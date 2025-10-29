@@ -6,7 +6,6 @@ import {
   DescriptionsProps,
   Divider,
   Image,
-  Progress,
   Segmented,
   Select,
 } from 'antd';
@@ -16,6 +15,7 @@ import styled from 'styled-components';
 import Comment from './Comment';
 import Product from '@/components/Product';
 import { data } from '@/constants';
+import { useCommonStore } from '@/store';
 const CustomSegmented = styled(Segmented)`
   .ant-segmented-item-selected {
     background-color: var(--color-dark-lighter);
@@ -385,7 +385,7 @@ const ProductDetail = () => {
                 View All
               </Button>
             </div>
-            <Product />
+            <Product products={useCommonStore.getState().products} />
           </div>
         </div>
       </Wrapped>

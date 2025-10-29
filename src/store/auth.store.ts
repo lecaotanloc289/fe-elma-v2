@@ -1,24 +1,21 @@
 import { AuthState, SignInForm, SignUpForm } from '@/interfaces';
 import { AuthService } from '@/services/auth/AuthService';
-import { getUserFromToken } from '@/utils/jwt-decode';
+import { decodeJwt } from '@/utils/jwt-decode';
 import { StateCreator, create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 export const authApi: StateCreator<AuthState> = set => ({
   status: 'unauthorized',
   access_token: undefined,
-  refresh_token: undefined,
   user: undefined,
   signIn: async (data: SignInForm) => {
     try {
       const result = await AuthService.signIn(data);
       if (result?.success) {
-        const { access_token, refresh_token } = result.data;
-        const { sub, email, fullname, iat, exp }: any =
-          getUserFromToken(access_token);
+        const { access_token } = result.data;
+        const { sub, email, fullname, iat, exp }: any = decodeJwt(access_token);
         set({
           status: 'authorized',
           access_token,
-          // refresh_token,
           user: { id: sub, email, fullname, iat, exp },
         });
         return result;
@@ -45,11 +42,22 @@ export const authApi: StateCreator<AuthState> = set => ({
     }
   },
 
-  logOut: () => {
-    set({ status: 'unauthorized', access_token: undefined, user: undefined });
-    localStorage.removeItem('auth-storage');
-    localStorage.removeItem('cart-storage');
+  logOut: async () => {
+    try {
+      const result = await AuthService.logOut();
+      console.log(result);
+      set({ status: 'unauthorized', access_token: undefined, user: undefined });
+      localStorage.removeItem('auth-storage');
+      localStorage.removeItem('cart-storage');
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   },
+
+  setTokens: access_token => set({ access_token }),
+
+  clear: () => set({ access_token: undefined, refresh_token: undefined }),
 });
 
 export const useAuthStore = create<AuthState>()(

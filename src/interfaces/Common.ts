@@ -10,8 +10,8 @@ export interface Category {
 export interface Product {
   _id: string;
   sale?: string;
-  seller_id: string;
-  category_id: string;
+  store: any;
+  category: any;
   brand: string;
   name: string;
   description: string;

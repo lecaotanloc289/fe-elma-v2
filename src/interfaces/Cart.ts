@@ -19,8 +19,10 @@ export interface PaymentMethod {}
 
 export interface CartState {
   cart: Cart;
+  setCart: (data: any) => void;
   initialCart: (data: any) => Promise<void>;
   addProductToCart: (data: any) => Promise<void>;
+  updateProductCartItem: (data: any) => Promise<void>;
   deleteProductFromCart: (data: any) => Promise<void>;
   resetCart: () => void;
 }

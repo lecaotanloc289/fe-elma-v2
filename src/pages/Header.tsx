@@ -16,6 +16,10 @@ const Header = () => {
   const categories = useCommonStore(state => state.categories);
   const cart = useCartStore(state => state.cart);
 
+  const categoryOptions = categories.map(category => ({
+    value: category._id,
+    label: category.name,
+  }));
   // Change language
   const { lang, handleChangeLanguage } = useLanguage();
   const { t } = useTranslation();
@@ -57,6 +61,9 @@ const Header = () => {
   const handleOrderTracking = () => {
     navigate('/order-tracking');
   };
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   return (
     <div>
@@ -73,7 +80,7 @@ const Header = () => {
               className="cursor-pointer font-normal text-dark-lighter mr-1.5"
               onClick={handleOrderTracking}
             >
-              {t('Order tracking')}
+              {t('other-tracking')}
             </h6>
             <h6 className="cursor-pointer  font-normal text-base ">
               {t('help')}
@@ -98,40 +105,43 @@ const Header = () => {
           <div className="w-2/5 flex justify-items-start items-center">
             <Space.Compact size="middle">
               <Input
+                name="search"
+                id="search"
                 className="!border-none !bg-white-lighter !min-w-[255px]"
                 placeholder="Search something ..."
               />
-              <div className="w-full max-w-sm min-w-[200px]">
-                <div className="relative border-l border-white-enough-light flex">
-                  <select className="w-full h-[48px] bg-white-lighter placeholder:text-slate-400 text-slate-700 text-sm border-none rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400  appearance-none cursor-pointer">
-                    <option value="all">All categories</option>
-                    {categories.length > 0 &&
-                      categories.map(category => (
-                        <option key={category._id} value={category.name}>
-                          {category.name}
-                        </option>
-                      ))}
-                    {/* <option value="brazil">All categories</option>
-                    <option value="bucharest">Category 1</option>
-                    <option value="london">Category 2</option>
-                    <option value="washington">Category 3</option> */}
-                  </select>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.2"
-                    stroke="currentColor"
-                    className="h-5 w-5 ml-1 mt-1 absolute top-2.5 right-2.5 text-slate-700"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-                    />
-                  </svg>
+              <div className="w-full max-w-sm border-l border-dark-lightest  ">
+                <div className="bg-white-lighter border-l h-full  flex-center rounded-r-xl">
+                  <Select
+                    className="border-none"
+                    defaultValue="all"
+                    style={{ width: 200 }}
+                    onChange={handleChange}
+                    virtual={false}
+                    suffixIcon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.2"
+                        stroke="currentColor"
+                        className="h-5 w-5 ml-1 mt-1  text-slate-700"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                        />
+                      </svg>
+                    }
+                    options={[
+                      { value: 'all', label: 'All Category' },
+                      ...categoryOptions,
+                    ]}
+                  />
                 </div>
               </div>
+
               <button className="flex-center !bg-dark-ink text-white rounded-md w-12 h-12">
                 <i className="fa-regular fa-magnifying-glass fa-lg"></i>
               </button>
@@ -139,7 +149,7 @@ const Header = () => {
           </div>
           <div className="w-2/5 flex items-center justify-end space-x-4">
             <div className="cursor-pointer">
-              <Badge count={cart.products?.length ?? 0} offset={[-5, 5]}>
+              <Badge count={cart?.products?.length ?? 0} offset={[-5, 5]}>
                 <IconButton
                   size="fa-xl"
                   icon="fa-cart-shopping"

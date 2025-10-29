@@ -21,10 +21,10 @@ export const commonApi: StateCreator<CommonState> = (set, get) => ({
   },
   getProducts: async (data: Filter) => {
     try {
-      const { products } = get();
-      if (products && products.length > 0) {
-        return { data: products, cached: true };
-      }
+      // const { products } = get();
+      // if (products && products.length > 0) {
+      //   return { data: products, cached: true };
+      // }
       const result = await CommonService.getProducts(data);
       set({ products: result.data?.data });
       return result;

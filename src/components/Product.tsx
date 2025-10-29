@@ -2,91 +2,37 @@ import { Rate } from 'antd';
 import { Button } from './Button';
 import { Product } from '@/interfaces';
 import { formatPrice } from '@/utils';
-const onFavorite = () => {};
-const products2 = [
-  {
-    id: 1,
-    name: 'Samsung Galaxy Watch 3',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/Bitmap.png',
-    sale: true,
-    rating: 5,
-    buttons: ['Add to cart', 'Quick view'],
-  },
-  {
-    id: 2,
-    name: 'Apple Watch 4 2020',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/Category3.png',
-    sale: false,
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: 'iPhone XS Max Pro',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/iphone.png',
-    sale: true,
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: 'Beats by Dre C 3450',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/Category6.png',
-    sale: false,
-    rating: 5,
-  },
-  {
-    id: 5,
-    name: 'Airpods 2nd Gen',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/Air.png',
-    sale: false,
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: 'Garmin Watch Fit X',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/clock.png',
-    sale: true,
-    rating: 5,
-  },
-  {
-    id: 7,
-    name: 'Women Yellow Turtleneck',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/Category4.png',
-    sale: false,
-    rating: 5,
-  },
-  {
-    id: 8,
-    name: 'Harman Kardon Speaker',
-    category: 'Men Fashion',
-    price: 1725.0,
-    image: '/images/Category2.png',
-    sale: true,
-    rating: 5,
-  },
-];
+import { useCartStore } from '@/store/cart.store';
+import { useNavigate } from 'react-router';
+import { useMessageApi } from '@/services';
 
 const Products = ({ products }: { products: Product[] }) => {
-  const handleAddToCart = async (id: string) => {
-    console.log(id);
+  const navigate = useNavigate();
+  const message = useMessageApi();
+  const handleAddToCart = async (id: string, productName?: string) => {
+    try {
+      const data = {
+        id,
+        quantity: 1,
+      };
+      const response: any = await useCartStore
+        .getState()
+        .addProductToCart(data);
+      if (response?.success) {
+        message.success(`Add product ${productName} to cart success!`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleViewProductDetail = (id: string) => {
+    navigate('/product-detail');
   };
   return (
     <div className="w-4/5 mx-auto">
       <div className="grid grid-cols-4 my-4">
-        {products.map(product => (
+        {products?.map(product => (
           <div
             key={product?._id}
             className="relative group max-w-[255px] p-5 my-5"
@@ -105,7 +51,7 @@ const Products = ({ products }: { products: Product[] }) => {
             </div>
             <div className="flex-center my-[26px] mx-auto">
               <img
-                src={product?.images[0] ?? ''}
+                src={product?.images?.[0] ?? ''}
                 alt={product?.name ?? ''}
                 className="h-[180px]"
               />
@@ -132,14 +78,18 @@ const Products = ({ products }: { products: Product[] }) => {
             </div>
             <div className="absolute w-full hidden group-hover:flex group-hover:flex-col z-10">
               <Button
-                onClick={() => handleAddToCart(product._id)}
+                onClick={() => handleAddToCart(product._id, product.name)}
                 className="my-4 text-white"
                 variant="contained"
               >
                 <i className="fa-solid fa-cart-circle-plus mr-1 w-5 h-5"></i>
                 <span className="font-[600]">Add to cart</span>
               </Button>
-              <Button variant="outlined" className="text-dark-lightest">
+              <Button
+                onClick={() => handleViewProductDetail(product._id)}
+                variant="outlined"
+                className="text-dark-lightest"
+              >
                 <i className="fa-solid fa-eye mr-1 w-5 h-5"></i>
                 <span className="">Quick View</span>
               </Button>

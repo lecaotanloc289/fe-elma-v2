@@ -25,7 +25,14 @@ export const AuthService = {
   },
 
   logOut: async () => {
-    return { success: true };
+    try {
+      const response = await api.post(`${baseUrl}/logout`);
+      return response.data;
+    } catch (error: any) {
+      return (
+        error?.response?.data ?? { success: false, message: 'Network error' }
+      );
+    }
   },
 
   //   getProfile: async () => {

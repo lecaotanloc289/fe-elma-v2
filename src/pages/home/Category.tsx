@@ -23,7 +23,7 @@ const Category = () => {
       </div>
       <div className="flex-between">
         {data?.home?.categories?.map(category => (
-          <div className="flex-center flex-col gap-y-4">
+          <div key={category.id} className="flex-center flex-col gap-y-4">
             <img
               width={56}
               height={56}

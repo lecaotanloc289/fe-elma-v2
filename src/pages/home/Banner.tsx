@@ -1,10 +1,22 @@
 import { Button } from '@/components';
 import { data } from '@/constants';
+import { useCartStore } from '@/store/cart.store';
 import { Carousel } from 'antd';
 
 const Banner = () => {
   const products = data.home.banner.products;
-
+  const handleAddToCart = async (id: any) => {
+    try {
+      const data = {
+        id,
+        quantity: 1,
+      };
+      const response = await useCartStore.getState().addProductToCart(data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Carousel
       className=" bg-white-lighter py-4 "
@@ -24,8 +36,12 @@ const Banner = () => {
                 <Button className="text-white">
                   Buy Now for ${item.price}
                 </Button>
-                <Button variant="outlined" className="text-dark-indigo">
-                  Learn more
+                <Button
+                  onClick={() => handleAddToCart(item.id)}
+                  variant="outlined"
+                  className="text-dark-indigo"
+                >
+                  Add to Cart
                 </Button>
               </div>
             </section>
