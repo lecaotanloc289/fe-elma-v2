@@ -4,30 +4,38 @@ import Wrapped from '@/components/Wrapped';
 import { data } from '@/constants';
 import MainLayout from '@/views/MainLayout';
 import { Card, Checkbox, Divider } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BackToShopping } from './components';
-import { useAuthStore } from '@/store';
-import { useMessageApi } from '@/services/hooks';
 import { useTranslation } from 'react-i18next';
+import { useCartStore } from '@/store/cart.store';
+import { formatPrice } from '@/utils';
+import { QuantityInput } from './components/QuantityInput';
+import { useNavigate } from 'react-router';
 
 const Cart = () => {
+  const navigate = useNavigate();
+  const cart = useCartStore(state => state.cart);
   const { t } = useTranslation();
-
-  // const message = useMessageApi();
-  // const status = useAuthStore(state => state.status);
   const [checked, setChecked] = useState(false);
   const handleSelectAllProduct = () => {
     setChecked(!checked);
   };
-  // console.log(status);
+  const handleDeleteProductFromCart = async (id?: string) => {
+    try {
+      await useCartStore.getState().deleteProductFromCart([id]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (status === 'authorized') {
-  //     message.success('Login ok');
-  //   } else {
-  //     message.warning('Login khoong ok');
-  //   }
-  // }, [status]);
+  const handleUpdateProductCartItem = async (data: any) => {
+    try {
+      // TODO: check quantity if equal 1, ask user remove item from cart
+      await useCartStore.getState().updateProductCartItem(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <MainLayout>
@@ -44,25 +52,115 @@ const Cart = () => {
             {/* Select all product */}
             <div className="p-5 bg-white rounded-md h-[56px] flex items-center">
               <Checkbox onChange={handleSelectAllProduct} className="">
-                Products
+                Select all
               </Checkbox>
             </div>
 
             {/* Main cart */}
             <div className="flex justify-between">
               <div className="w-[730px]">
-                {data.cart.products.map(product => (
-                  <Card
-                    key={`${product?.id ?? ''}-${product?.store ?? ''}`}
-                    className="!my-4 p-4"
-                  >
+                {cart?.products?.map(product => (
+                  <Card key={product.product?._id} className="!my-4 p-4">
+                    <div className="w-full  ">
+                      <Checkbox className="flex-center">
+                        <div className="flex-center mt-1 max-h-[32px]">
+                          <img
+                            src={
+                              product?.product?.store?.logo_url ?? './Elma.svg'
+                            }
+                            width={32}
+                            height={32}
+                            alt=""
+                          />
+                          {product?.product?.store?.name}
+                        </div>
+                      </Checkbox>
+                      <Divider />
+                    </div>
+
+                    <div
+                      key={product?.product?._id}
+                      className="flex items-center justify-between my-8"
+                    >
+                      <div className="flex-center space-x-5">
+                        <Checkbox className="!mr-4" />
+                        <div className="flex-center w-[120px] h-[100px]">
+                          <img
+                            width={70}
+                            src={product.product.images?.[0] ?? './Elma.svg'}
+                            alt={product.product?.name ?? ''}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div className="flex flex-col space-y-3">
+                          <span className="text-[18px] leading-5 font-[500] text-dark-title">
+                            {product?.product?.name ?? ''}
+                          </span>
+                          <span className="label"></span>
+                        </div>
+                      </div>
+
+                      <div className="flex-center space-x-4">
+                        <div className="flex-center px-4">
+                          <h5 className="font-[500] text-green">
+                            {formatPrice(product.product?.price ?? 0)}
+                          </h5>
+                        </div>
+                        <div className="row flex">
+                          <button
+                            className="icon-button"
+                            type="button"
+                            onClick={() =>
+                              handleUpdateProductCartItem({
+                                id: product?.product?._id,
+                                quantity: -1,
+                              })
+                            }
+                          >
+                            <i className="fa-solid fa-minus" />
+                          </button>
+                          <QuantityInput
+                            productId={product?.product?._id}
+                            quantity={product.quantity ?? 0}
+                            updateQuantity={handleUpdateProductCartItem}
+                          />
+                          <button
+                            onClick={() =>
+                              handleUpdateProductCartItem({
+                                id: product?.product?._id,
+                                quantity: 1,
+                              })
+                            }
+                            className="icon-button"
+                            type="button"
+                          >
+                            <i className="fa-solid fa-plus"></i>
+                          </button>
+                        </div>
+                        <button
+                          onClick={() =>
+                            handleDeleteProductFromCart(product.product._id)
+                          }
+                          className="flex-center rounded-md group !bg-white hover:!bg-red/10 w-[38px] h-[38px]"
+                        >
+                          <i className=" fa-solid fa-trash text-dark-lightest group-hover:text-red h-4 w-4"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+
+                {/* {data.cart.products.map(product => (
+                  <Card key={`${Math.random()}`} className="!my-4 p-4">
                     <div className="w-full ">
                       <Checkbox className="">{product?.store ?? ''}</Checkbox>
                       <Divider />
                     </div>
-                    {/* <Divider className="!my-2" /> */}
                     {product?.products?.map(item => (
-                      <div className="flex items-center justify-between my-8">
+                      <div
+                        key={item.id}
+                        className="flex items-center justify-between my-8"
+                      >
                         <div className="flex-center space-x-5">
                           <Checkbox className="!mr-4" />
                           <div className="flex-center w-[120px] h-[100px]">
@@ -113,7 +211,7 @@ const Cart = () => {
                       </div>
                     ))}
                   </Card>
-                ))}
+                ))} */}
               </div>
               <div className="w-[350px]">
                 <Card className="!my-4 p-5">
@@ -157,13 +255,20 @@ const Cart = () => {
                   May be you like it too...
                 </span>
               </div>
-              <Button variant="outlined" className="text-indigo">
+              <Button
+                onClick={() => navigate('/search')}
+                variant="outlined"
+                className="text-indigo"
+              >
                 View All
               </Button>
             </div>
             <div className="grid grid-cols-6 gap-x-4 my-5">
               {data.cart.productSuggest?.map(product => (
-                <div className="flex-between flex-col w-40 space-y-4">
+                <div
+                  key={product.image}
+                  className="flex-between flex-col w-40 space-y-4"
+                >
                   <div className="flex-center my-4 w-20 h-20">
                     <img
                       src={product?.image ?? ''}

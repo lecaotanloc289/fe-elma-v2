@@ -4,7 +4,7 @@ import ResetPassword from '@/pages/ResetPassword';
 import Category from '@/pages/category/Category';
 import SearchResult from '@/pages/search/SearchResult';
 import OrderSuccess from '@/pages/order/OrderSuccess';
-import ProductDetail from '@/pages/product_detail/ProductDetail';
+import ProductDetail from '@/pages/product/ProductDetail';
 import SignUpAlt from '@/pages/sign-up/SignUpAlt';
 import SignIn from '@/pages/sign-in/SignIn';
 import OrderTracking from '@/pages/order/OrderTracking';

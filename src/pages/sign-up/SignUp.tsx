@@ -12,7 +12,7 @@ import {
   passwordRules,
   phoneRules,
 } from './sign-up.rules';
-import { useAuthStore } from '@/store';
+import { useAuthStore } from '@/store/auth.store';
 import { useMessageApi } from '@/services/hooks';
 import { SignUpForm } from '@/interfaces';
 
@@ -64,6 +64,8 @@ const Register = () => {
         message.warning(result?.message);
       }
     } catch (error) {
+      message.error('Sign up failed. Please try again.');
+      console.error('Sign up error:', error);
     } finally {
       setLoading(false);
     }

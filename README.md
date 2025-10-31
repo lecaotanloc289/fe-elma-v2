@@ -24,7 +24,7 @@
 - [More](#more)
 
 ## <a name="introduction">Introduction</a>
-This project is a production-ready E-commerce System built with React and TypeScript. .
+This project is a production-ready E-commerce System built with React and TypeScript.
 
  
 ## <a name="tech-stack">Tech Stack</a>

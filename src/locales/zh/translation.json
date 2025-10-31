@@ -20,5 +20,8 @@
   "reviews": "评价",
   "shipping": "配送",
   "payment": "支付",
-  "thank_you": "感谢您的购买！"
+  "thank_you": "感谢您的购买！",
+  "help": "帮助",
+  "other-tracking": "订单追踪"
+
 }
