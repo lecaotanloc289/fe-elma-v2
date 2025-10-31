@@ -11,6 +11,13 @@ import { useCommonStore } from '@/store';
 import { useCartStore } from '@/store/cart.store';
 const Header = () => {
   const navigate = useNavigate();
+  // Change language
+  const { lang, handleChangeLanguage } = useLanguage();
+  const { t } = useTranslation();
+
+  // Change account options
+  const [accountOption, setAccountOption] = useState(1);
+
   const logOut = useAuthStore(state => state.logOut);
   const userData = useAuthStore(state => state.user);
   const categories = useCommonStore(state => state.categories);
@@ -20,12 +27,6 @@ const Header = () => {
     value: category._id,
     label: category.name,
   }));
-  // Change language
-  const { lang, handleChangeLanguage } = useLanguage();
-  const { t } = useTranslation();
-
-  // Change account options
-  const [accountOption, setAccountOption] = useState(1);
 
   const accountOptions = [
     {
@@ -41,10 +42,10 @@ const Header = () => {
       label: 'Log out',
     },
   ];
-  const handleAccountOptions = (v: any) => {
+  const handleAccountOptions = async (v: any) => {
     setAccountOption(v);
     if (v === 3) {
-      logOut();
+      await logOut();
       navigate('/sign-in');
     }
   };
@@ -58,10 +59,10 @@ const Header = () => {
   const handleClickUser = () => {
     navigate('/user-profile');
   };
-  const handleOrderTracking = () => {
+  const handleClickOrderTracking = () => {
     navigate('/order-tracking');
   };
-  const handleChange = (value: string) => {
+  const handleChangeCategory = (value: string) => {
     console.log(`selected ${value}`);
   };
 
@@ -78,9 +79,9 @@ const Header = () => {
           <div className="flex items-center justify-center gap-2">
             <h6
               className="cursor-pointer font-normal text-dark-lighter mr-1.5"
-              onClick={handleOrderTracking}
+              onClick={handleClickOrderTracking}
             >
-              {t('other-tracking')}
+              {t('order-tracking')}
             </h6>
             <h6 className="cursor-pointer  font-normal text-base ">
               {t('help')}
@@ -111,12 +112,12 @@ const Header = () => {
                 placeholder="Search something ..."
               />
               <div className="w-full max-w-sm border-l border-dark-lightest  ">
-                <div className="bg-white-lighter border-l h-full  flex-center rounded-r-xl">
+                <div className="bg-white-lighter border-l h-full  flex-center ">
                   <Select
                     className="border-none"
                     defaultValue="all"
-                    style={{ width: 200 }}
-                    onChange={handleChange}
+                    style={{ width: 180 }}
+                    onChange={handleChangeCategory}
                     virtual={false}
                     suffixIcon={
                       <svg
@@ -142,16 +143,16 @@ const Header = () => {
                 </div>
               </div>
 
-              <button className="flex-center !bg-dark-ink text-white rounded-md w-12 h-12">
+              <button className="flex-center !bg-dark-ink text-white rounded-r-md w-12 h-12">
                 <i className="fa-regular fa-magnifying-glass fa-lg"></i>
               </button>
             </Space.Compact>
           </div>
           <div className="w-2/5 flex items-center justify-end space-x-4">
             <div className="cursor-pointer">
-              <Badge count={cart?.products?.length ?? 0} offset={[-5, 5]}>
+              <Badge count={cart?.length ?? 0} offset={[-5, 5]}>
                 <IconButton
-                  size="fa-xl"
+                  size="fa-lg"
                   icon="fa-cart-shopping"
                   onClick={handleClickCart}
                 />
@@ -160,13 +161,13 @@ const Header = () => {
 
             <IconButton
               className=""
-              size="fa-xl"
+              size="fa-lg"
               icon="fa-heart"
               onClick={handleClickFavorite}
             />
             <IconButton
               className=""
-              size="fa-xl"
+              size="fa-lg"
               icon="fa-user"
               onClick={handleClickUser}
             />

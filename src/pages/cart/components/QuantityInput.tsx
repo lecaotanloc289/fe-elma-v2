@@ -13,43 +13,42 @@ type Props = {
 };
 
 export function QuantityInput({ productId, quantity, updateQuantity }: Props) {
-  // local state để gõ tự do (string để giữ tạm '', '0', '01', ...)
+  // Local state for free-form input (string to temporarily hold '', '0', '01', etc.)
   const [local, setLocal] = useState(String(quantity ?? 0));
 
-  // nếu prop quantity đổi từ bên ngoài (do đồng bộ giỏ hàng), sync lại input
+  // If prop quantity changes from outside (due to cart sync), re-sync input
   useEffect(() => setLocal(String(quantity ?? 0)), [quantity]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
-    // Cho phép rỗng để người dùng xóa rồi gõ lại
+    // Allow null for user delete and re-input
     if (v === '') return setLocal('');
 
-    // Chỉ nhận số (1-9). Nếu muốn chặn số 0 đầu
+    // Accept only (1-9).
     if (/^(?:[1-9]\d*)?$/.test(v)) setLocal(v);
   };
 
   const commit = async () => {
-    // chuẩn hóa: rỗng -> giữ nguyên quantity cũ; min=1, max=999 (tùy bạn)
+    // Standardlization: empty -> keep origin quantity; min=1, max=999
     const parsed = parseInt(local, 10);
     const normalized = Number.isFinite(parsed)
       ? Math.min(Math.max(parsed, 1), 999)
       : quantity;
 
-    // cập nhật UI về số đã chuẩn hóa
+    // Update UI equal number standardlization
     setLocal(String(normalized));
 
-    // chỉ gọi API khi khác giá trị cũ và giá trị lớn hơn 0, mặc dù đã chặn không
+    // Just call API while new value different from origin quantity value
     if (normalized !== quantity && normalized > 0) {
       try {
+        // call API update quantity
         await updateQuantity({
           id: productId,
           quantity: normalized,
-        }); // call API
-        // có thể toast "Đã cập nhật số lượng"
+        });
       } catch (err) {
-        // rollback nếu lỗi
+        // rollback if error
         setLocal(String(quantity));
-        // toast lỗi ở đây
         console.error(err);
       }
     }

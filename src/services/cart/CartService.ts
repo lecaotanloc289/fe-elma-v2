@@ -5,6 +5,7 @@ export const CartService = {
   initialCart: async () => {
     try {
       const response = await api.get(`${baseUrl}`);
+
       return response.data;
     } catch (error: any) {
       return (
@@ -47,10 +48,10 @@ export const CartService = {
     }
   },
 
-  deleteProductFromCart: async (data: [string]) => {
+  deleteProductFromCart: async (data: string[]) => {
     try {
       const response = await api.delete(`${baseUrl}`, { data });
-      return response.data;
+      return response?.data ?? { success: true, data: { products: [] } };
     } catch (error: any) {
       return (
         error?.response?.data ?? {

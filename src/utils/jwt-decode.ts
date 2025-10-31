@@ -5,9 +5,9 @@ export function decodeJwt<T = JwtPayload>(token?: string): T | null {
   const parts = token.split('.');
   if (parts.length !== 3) return null;
   try {
-    const payload = JSON.parse(
-      atob(parts[1].replace(/-/g, '+').replace(/_/g, '/'))
-    );
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
+    const payload = JSON.parse(atob(padded));
     return payload as T;
   } catch {
     return null;

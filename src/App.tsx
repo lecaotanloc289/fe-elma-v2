@@ -4,6 +4,7 @@ import AppRoutes from './routes/AppRoutes';
 import { useEffect } from 'react';
 import { useAuthStore, useCommonStore } from './store';
 import { useCartStore } from './store/cart.store';
+import GlobalSpin from './components/GlobalSpin';
 
 function App() {
   localStorage.setItem('language', 'en');
@@ -13,31 +14,24 @@ function App() {
   const initialCart = useCartStore(state => state.initialCart);
   const resetCart = useCartStore(state => state.resetCart);
 
-  const loadCategories = async () => {
+  const init = async () => {
     try {
       await getCategories({});
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const loadProducts = async () => {
-    try {
       await getProducts({});
     } catch (error) {
       console.log(error);
     }
   };
+
   const loadCart = async () => {
     try {
-      await initialCart({});
+      await initialCart();
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    loadCategories();
-    loadProducts();
+    init();
     if (authorized === 'authorized') {
       loadCart();
     } else {
@@ -46,6 +40,7 @@ function App() {
   }, [authorized]);
   return (
     <BrowserRouter>
+      <GlobalSpin />
       <AppRoutes />
     </BrowserRouter>
   );
