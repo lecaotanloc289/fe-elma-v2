@@ -25,8 +25,12 @@ export interface Product {
 export interface Filter {}
 
 export interface CommonState {
+  product: string | undefined;
+  store: string | undefined;
   categories: Category[];
   products: Product[];
+  setProductId: (id: string) => void;
+  setStoreId: (id: string) => void;
   getProducts: (data: Filter) => Promise<void>;
   getCategories: (data: Filter) => Promise<void>;
 }

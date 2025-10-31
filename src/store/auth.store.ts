@@ -1,8 +1,21 @@
-import { AuthState, SignInForm, SignUpForm } from '@/interfaces';
+import { AuthStatus, SignInForm, SignUpForm, User } from '@/interfaces';
 import { AuthService } from '@/services/auth/AuthService';
 import { decodeJwt } from '@/utils/jwt-decode';
 import { StateCreator, create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+
+type AuthState = {
+  status: AuthStatus;
+  error?: string | null;
+  access_token?: string;
+  user?: User;
+  signIn: (data: SignInForm) => Promise<void>;
+  signUp: (data: SignUpForm) => Promise<void>;
+  logOut: () => void;
+  setTokens: (access_token: string) => void;
+  clear: () => void;
+};
+
 export const authApi: StateCreator<AuthState> = set => ({
   status: 'unauthorized',
   access_token: undefined,
@@ -12,12 +25,25 @@ export const authApi: StateCreator<AuthState> = set => ({
       const result = await AuthService.signIn(data);
       if (result?.success) {
         const { access_token } = result.data;
-        const { sub, email, fullname, iat, exp }: any = decodeJwt(access_token);
+        const payload = decodeJwt(access_token);
+
+        if (!payload) {
+          set({
+            status: 'unauthorized',
+            access_token: undefined,
+            user: undefined,
+          });
+          return result;
+        }
+
+        const { sub, email, fullname, iat, exp }: any = payload;
+
         set({
           status: 'authorized',
           access_token,
           user: { id: sub, email, fullname, iat, exp },
         });
+
         return result;
       } else {
         set({
@@ -45,7 +71,6 @@ export const authApi: StateCreator<AuthState> = set => ({
   logOut: async () => {
     try {
       const result = await AuthService.logOut();
-      console.log(result);
       set({ status: 'unauthorized', access_token: undefined, user: undefined });
       localStorage.removeItem('auth-storage');
       localStorage.removeItem('cart-storage');
@@ -57,7 +82,7 @@ export const authApi: StateCreator<AuthState> = set => ({
 
   setTokens: access_token => set({ access_token }),
 
-  clear: () => set({ access_token: undefined, refresh_token: undefined }),
+  clear: () => set({ access_token: undefined }),
 });
 
 export const useAuthStore = create<AuthState>()(
