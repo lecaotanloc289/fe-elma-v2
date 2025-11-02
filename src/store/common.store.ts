@@ -4,8 +4,16 @@ import { StateCreator, create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 export const commonApi: StateCreator<CommonState> = (set, get) => ({
+  product: undefined,
+  store: undefined,
   categories: [],
   products: [],
+  setProductId(id) {
+    set({ product: id });
+  },
+  setStoreId(id: string) {
+    set({ store: id });
+  },
   getCategories: async (data: Filter) => {
     try {
       const { categories } = get();
@@ -21,10 +29,6 @@ export const commonApi: StateCreator<CommonState> = (set, get) => ({
   },
   getProducts: async (data: Filter) => {
     try {
-      // const { products } = get();
-      // if (products && products.length > 0) {
-      //   return { data: products, cached: true };
-      // }
       const result = await CommonService.getProducts(data);
       set({ products: result.data?.data });
       return result;

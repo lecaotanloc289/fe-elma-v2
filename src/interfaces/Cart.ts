@@ -1,8 +1,10 @@
 import { Product } from './Common';
 export interface CartItem {
+  _id: string;
   product: Product;
   quantity: number;
 }
+
 export interface Cart {
   user: string | undefined;
   products: CartItem[];
@@ -17,12 +19,53 @@ export interface Address {}
 
 export interface PaymentMethod {}
 
+// =================================================
+
 export interface CartState {
-  cart: Cart;
+  cart: CartItem[];
+
   setCart: (data: any) => void;
-  initialCart: (data: any) => Promise<void>;
-  addProductToCart: (data: any) => Promise<void>;
-  updateProductCartItem: (data: any) => Promise<void>;
-  deleteProductFromCart: (data: any) => Promise<void>;
+
+  initialCart: () => Promise<void>;
+
+  addProductToCart: (data: AddProductItem) => Promise<void>;
+
+  updateProductCartItem: (data: AddProductItem) => Promise<void>;
+
+  deleteProductFromCart: (data: string[]) => Promise<void>;
+
   resetCart: () => void;
+
+  // Id is selecting
+  selected: Set<string>;
+
+  // Select / Ignore select item
+  toggleItem: (id: string, checked: boolean) => void;
+
+  // Select / Ignore select store
+  toggleStore: (storeId: string, checked: boolean) => void;
+
+  // Select / Ignore select all items
+  toggleAll: (checked: boolean) => void;
+
+  // Checking select all
+  isAllChecked: () => boolean;
+
+  // Check store status
+  storeStatus: (storeId: string) => {
+    checked: boolean;
+  };
+
+  // Retrurn some total calculate
+  totals: () => {
+    itemCount: number;
+    subtotal: number;
+    grandTotal: number;
+  };
 }
+
+
+
+
+
+

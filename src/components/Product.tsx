@@ -5,19 +5,17 @@ import { formatPrice } from '@/utils';
 import { useCartStore } from '@/store/cart.store';
 import { useNavigate } from 'react-router';
 import { useMessageApi } from '@/services';
+import { useCommonStore } from '@/store';
 
 const Products = ({ products }: { products: Product[] }) => {
   const navigate = useNavigate();
   const message = useMessageApi();
   const handleAddToCart = async (id: string, productName?: string) => {
     try {
-      const data = {
+      const response: any = await useCartStore.getState().addProductToCart({
         id,
         quantity: 1,
-      };
-      const response: any = await useCartStore
-        .getState()
-        .addProductToCart(data);
+      });
       if (response?.success) {
         message.success(`Add product ${productName} to cart success!`);
       }
@@ -27,6 +25,7 @@ const Products = ({ products }: { products: Product[] }) => {
   };
 
   const handleViewProductDetail = (id: string) => {
+    useCommonStore.getState().setProductId(id);
     navigate('/product-detail');
   };
   return (

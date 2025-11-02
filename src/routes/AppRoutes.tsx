@@ -29,6 +29,7 @@ const AppRoutes = () => {
       <Route path="/category" element={<Category />} />
       <Route path="/search" element={<SearchResult />} />
       <Route path="/product-detail" element={<ProductDetail />} />
+      <Route path="/store" element={<ProductDetail />} />
       <Route element={<PublicRoute />}>
         <Route path="/sign-in-alt" element={<SignInAlt />} />
         <Route path="/sign-in" element={<SignIn />} />
@@ -50,10 +51,9 @@ const AppRoutes = () => {
           element={<OrderTrackingDetail />}
         />
         <Route path="/user-profile" element={<UserProfile />} />
-        <Route path="/user-profile" element={<UserProfile />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       <Route path="/page-404" element={<Page400 />} />
       <Route path="/page-500" element={<Page500 />} />
     </Routes>

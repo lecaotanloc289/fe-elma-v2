@@ -10,12 +10,15 @@ import {
   Select,
 } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
 import Product from '@/components/Product';
 import { data } from '@/constants';
 import { useCommonStore } from '@/store';
+import { CommonService, useMessageApi } from '@/services';
+import { formatPrice } from '@/utils';
+import { useCartStore } from '@/store/cart.store';
 const CustomSegmented = styled(Segmented)`
   .ant-segmented-item-selected {
     background-color: var(--color-dark-lighter);
@@ -50,6 +53,7 @@ const CustomSelect = styled(Select)`
   }
 `;
 const ProductDetail = () => {
+  const message = useMessageApi();
   const descriptions: DescriptionsProps['items'] = [
     {
       span: 'filled',
@@ -78,12 +82,15 @@ const ProductDetail = () => {
     },
   ];
   const product_detail = data.product_detail.product_detail;
-
   const commentFilters = data.product_detail.commentFilters;
 
-  const [selectedImage, setSelectedImage] = useState(
-    product_detail.images[1].image
-  );
+  const [ellipsis, setEllipsis] = useState(true);
+  const [product, setProduct] = useState<any>({});
+  const [quantity, setQuantity] = useState<number>(1);
+  const { id, products } = useCommonStore();
+
+  const [selectedImage, setSelectedImage] = useState(product?.images?.[0]);
+
   const handleSelectedImage = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
@@ -91,7 +98,37 @@ const ProductDetail = () => {
   const handleChangeColor = (value: any) => {
     console.log(value);
   };
-  const [ellipsis, setEllipsis] = useState(true);
+
+  const loadProductDetail = async (id: string) => {
+    const result = await CommonService.getProductDetail(id);
+    if (result?.success) {
+      setProduct(result.data);
+      setSelectedImage(result.data.images[0]);
+    }
+  };
+  const handleBuyNow = () => {};
+  const handleAddProductToCart = async (
+    id: string,
+    quantity?: number,
+    productName?: string
+  ) => {
+    try {
+      const response: any = await useCartStore.getState().addProductToCart({
+        id,
+        quantity: quantity ?? 1,
+      });
+      if (response?.success) {
+        message.success(`Add product ${productName} to cart success!`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!id) return;
+    loadProductDetail(id);
+  }, [id]);
 
   return (
     <MainLayout>
@@ -101,16 +138,17 @@ const ProductDetail = () => {
           <div className="flex-center flex-col">
             <Image width={445} src={selectedImage ?? ''} className="py-5" />
             <div className="flex-between space-x-2">
-              {product_detail.images.map(detail => (
+              {product.images?.map((image: any) => (
                 <button
-                  key={`${detail.id}-${detail.image}`}
+                  key={image}
                   className=""
-                  onClick={() => handleSelectedImage(detail.image)}
+                  onClick={() => handleSelectedImage(image)}
                 >
                   <img
-                    width={130}
-                    height={110}
-                    src={detail?.image ?? ''}
+                    className=""
+                    width={100}
+                    height={100}
+                    src={image ?? ''}
                     alt=""
                   />
                 </button>
@@ -120,19 +158,17 @@ const ProductDetail = () => {
 
           {/* Product info */}
           <div className="w-[540px]">
-            <h2 className="">{product_detail?.name ?? ''}</h2>
+            <h2 className="">{product?.name ?? ''}</h2>
             <section className="flex items-center space-x-4 my-5">
               <div className="flex-center bg-orange rounded-md text-white h-7.5 px-2">
                 <i className="fa-solid fa-star"></i>
-                <p className="font-[500] text-white">
-                  {product_detail?.rating ?? 0}
-                </p>
+                <p className="font-[500] text-white">{product?.rating ?? 0}</p>
               </div>
               <p className="font-[500] text-dark-text">
-                {product_detail?.product_sold ?? 0} Product sold
+                {product?.sold ?? 0} Product sold
               </p>
               <p className="font-[500] text-dark-text">
-                {product_detail?.product_watched ?? 0} Product watched
+                {product?.watched ?? 0} Product watched
               </p>
             </section>
             <Paragraph
@@ -143,8 +179,9 @@ const ProductDetail = () => {
                   : false
               }
             >
-              {product_detail?.description ?? ''}
+              {product?.description ?? ''}
             </Paragraph>
+
             <Divider />
             <section className="flex space-x-6">
               <div className="flex flex-col space-y-2">
@@ -160,7 +197,14 @@ const ProductDetail = () => {
               <div className="space-y-2">
                 <p className="font-[500] text-dark-label">Quantity</p>
                 <input
-                  defaultValue={1}
+                  min={1}
+                  max={999}
+                  step={1}
+                  value={quantity}
+                  onChange={(e: any) =>
+                    setQuantity(e.target.value > 1 ? e.target.value : 1)
+                  }
+                  inputMode="numeric"
                   type="number"
                   className="bg-white-lighter rounded-sm p-1 w-[75px] text-[14px] text-dark-title pl-2"
                 />
@@ -174,14 +218,29 @@ const ProductDetail = () => {
                 />
               </div>
             </section>
+
             <Divider />
             <section className="flex-between">
-              <h3 className="">${product_detail?.price ?? 0}</h3>
+              <h3 className="">{formatPrice(product?.price ?? 0)}</h3>
               <div className="flex gap-x-4">
-                <Button variant="outlined" className="text-indigo">
+                <Button
+                  onClick={handleBuyNow}
+                  variant="outlined"
+                  className="text-indigo"
+                >
                   Buy Now
                 </Button>
-                <Button variant="contained" className="text-white">
+                <Button
+                  onClick={() =>
+                    handleAddProductToCart(
+                      product?._id,
+                      quantity,
+                      product?.name
+                    )
+                  }
+                  variant="contained"
+                  className="text-white"
+                >
                   Add to cart
                   <i className="fa-solid fa-cart-plus ml-2"></i>
                 </Button>
@@ -208,7 +267,7 @@ const ProductDetail = () => {
               href="#review"
               className="cursor-pointer font-[500] !text-dark-title"
             >
-              Review (2.1k)
+              Review ({product?.number_reviews ?? 0})
             </a>
             <a
               href="#related-product"
@@ -232,7 +291,7 @@ const ProductDetail = () => {
         {/* Description of product*/}
         <div className="w-3/4">
           <span className="text-dark-label text-[14px] leading-6">
-            {product_detail?.description ?? ''}
+            {product?.description ?? ''}
           </span>
         </div>
 
@@ -269,12 +328,12 @@ const ProductDetail = () => {
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         stroke="currentColor"
-                        stroke-width="1"
+                        strokeWidth="1"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         ></path>
                       </svg>
                     </span>
@@ -312,11 +371,9 @@ const ProductDetail = () => {
               </span>
               <div className="flex items-center">
                 <i className="fa-solid fa-star text-yellow text-[28px] mr-4"></i>
-                <h1 className="font-[400] mr-2.5">
-                  {product_detail?.rating ?? 0}
-                </h1>
+                <h1 className="h1">{product?.rating ?? 0}</h1>
                 <span className="text-[32px] leading-12 tracking-[0.2px text-dark-title]">
-                  / 5.0
+                  {` `} / 5.0
                 </span>
               </div>
               <div className="flex flex-col rounded-md bg-white-lighter py-3 px-[15px]">
@@ -374,19 +431,18 @@ const ProductDetail = () => {
           <div className="">
             <Comment />
           </div>
-
-          {/* Related product */}
-          <div id="related-product" className="space-y-8">
-            <div className="flex-between">
-              <span className="text-2xl leading-8 tracking-[0.2px] text-dark-title font-bold">
-                Related Products
-              </span>
-              <Button variant="outlined" className="text-indigo">
-                View All
-              </Button>
-            </div>
-            <Product products={useCommonStore.getState().products} />
+        </div>
+        {/* Related product */}
+        <div id="related-product" className="space-y-8">
+          <div className="flex-between">
+            <span className="text-2xl leading-8 tracking-[0.2px] text-dark-title font-bold">
+              Related Products
+            </span>
+            <Button variant="outlined" className="text-indigo">
+              View All
+            </Button>
           </div>
+          <Product products={products} />
         </div>
       </Wrapped>
     </MainLayout>

@@ -1,18 +1,5 @@
-import { User } from './User';
-
 export type AuthStatus = 'authorized' | 'unauthorized' | 'pending';
-export interface AuthState {
-  status: AuthStatus;
-  error?: string | null;
-  access_token?: string;
-  refresh_token?: string;
-  user?: User;
-  signIn: (data: SignInForm) => Promise<void>;
-  signUp: (data: SignUpForm) => Promise<void>;
-  logOut: () => void;
-  setTokens: (access_token: any) => void;
-  clear: () => void;
-}
+
 export interface SignInForm {
   email: string;
   password: string;

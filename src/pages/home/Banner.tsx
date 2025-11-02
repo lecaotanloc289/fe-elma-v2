@@ -1,18 +1,20 @@
 import { Button } from '@/components';
 import { data } from '@/constants';
+import { useMessageApi } from '@/services';
 import { useCartStore } from '@/store/cart.store';
 import { Carousel } from 'antd';
 
 const Banner = () => {
   const products = data.home.banner.products;
-  const handleAddToCart = async (id: any) => {
+  const message = useMessageApi();
+  const handleAddToCart = async (id: string, productName: string) => {
     try {
-      const data = {
-        id,
-        quantity: 1,
-      };
-      const response = await useCartStore.getState().addProductToCart(data);
-      console.log(response);
+      const result: any = await useCartStore
+        .getState()
+        .addProductToCart({ id, quantity: 1 });
+      if (result?.success) {
+        message.success(`Add product ${productName} to cart success!`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +39,9 @@ const Banner = () => {
                   Buy Now for ${item.price}
                 </Button>
                 <Button
-                  onClick={() => handleAddToCart(item.id)}
+                  onClick={() =>
+                    handleAddToCart(item.id.toString(), item.product_name)
+                  }
                   variant="outlined"
                   className="text-dark-indigo"
                 >

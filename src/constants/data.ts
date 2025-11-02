@@ -106,7 +106,7 @@ export const data = {
         {
           id: 1,
           name: 'Samsung Galaxy Watch 3',
-          category: 'Men Fashion',
+          category: 'Smart phone',
           price: 1725.0,
           image: '/images/Bitmap.png',
           sale: true,
@@ -116,7 +116,7 @@ export const data = {
         {
           id: 2,
           name: 'Apple Watch 4 2020',
-          category: 'Men Fashion',
+          category: 'Electronics',
           price: 1725.0,
           image: '/images/Category3.png',
           sale: false,
@@ -125,7 +125,7 @@ export const data = {
         {
           id: 3,
           name: 'iPhone XS Max Pro',
-          category: 'Men Fashion',
+          category: 'Smart phone',
           price: 1725.0,
           image: '/images/iphone.png',
           sale: true,
@@ -134,7 +134,7 @@ export const data = {
         {
           id: 4,
           name: 'Beats by Dre C 3450',
-          category: 'Men Fashion',
+          category: 'Electronics',
           price: 1725.0,
           image: '/images/Category6.png',
           sale: false,
@@ -143,7 +143,7 @@ export const data = {
         {
           id: 5,
           name: 'Airpods 2nd Gen',
-          category: 'Men Fashion',
+          category: 'Electronics',
           price: 1725.0,
           image: '/images/Air.png',
           sale: false,
@@ -152,7 +152,7 @@ export const data = {
         {
           id: 6,
           name: 'Garmin Watch Fit X',
-          category: 'Men Fashion',
+          category: 'Electronics',
           price: 1725.0,
           image: '/images/clock.png',
           sale: true,
@@ -170,7 +170,7 @@ export const data = {
         {
           id: 8,
           name: 'Harman Kardon Speaker',
-          category: 'Men Fashion',
+          category: 'Electronics',
           price: 1725.0,
           image: '/images/Category2.png',
           sale: true,
